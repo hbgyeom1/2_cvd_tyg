@@ -20,7 +20,6 @@ dd[, frs := ascvd_10y_frs(
   diabetes = diabetes_g
 )]
 
-dd[, c("age", "prg_g", "HE_sbp", "HE_chol",
-       "HE_HDL_st2", "drug_g", "diabetes_g", "sex_g") := NULL]
+dd[, c("prg_g", "sex_g") := NULL]
 
 fwrite(dd, "C:/Users/user/Documents/2_cvd_tyg/data/dd.csv")

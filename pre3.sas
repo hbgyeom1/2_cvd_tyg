@@ -14,4 +14,4 @@ else if 10 <= frs < 20 then frs_g = 2;
 else if frs >= 20 then frs_g = 3;
 run;
 
-data ss.out; set dd (drop=frs); run;
+data ss.out; set dd; run;
