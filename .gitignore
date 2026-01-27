@@ -4,3 +4,5 @@
 
 *.csv
 *.sas7bdat
+
+~$*
