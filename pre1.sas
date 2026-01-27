@@ -30,6 +30,10 @@ else if year in (2016 2017 2018) then year_g = 4;
 else if year in (2019 2020 2021) then year_g = 5;
 else if year in (2022 2023 2024) then year_g = 6;
 
+if 30 <= age <45 then age_g = 1;
+else if 45 <= age < 60 then age_g = 2;
+else if 60 <= age <= 74 then age_g = 3;
+
 if educ in (1 2 3) then educ_g = 1;
 else if educ = 4 then educ_g = 2;
 else if educ = 5 then educ_g = 3;
@@ -57,13 +61,14 @@ else if BP1 = 4 then stress_g = 3;
 if (BS1_1 in (1 2) & BS3_1 in (1 2 3)) or BS1_1 = 3
 then smoking_g = (BS1_1 = 2 & BS3_1 in (1 2));
 
-if DI1_2 = 5 then drug_g = 0;
+if DI1_2 in (5 8) then drug_g = 0;
 else if DI1_2 in (1 2 3 4) then drug_g = 1;
 
 if DE1_dg in (0 8) then diabetes_g = 0;
 else if DE1_dg = 1 then diabetes_g = 1;
 
-if HE_prg in (0 8) then prg_g = 0;
+if sex = 1 then prg_g = 0;
+else if  HE_prg in (0 8) then prg_g = 0;
 else if HE_prg = 1 then prg_g = 1;
 
 if HE_sbp = . then HE_sbp = (HE_sbp2 + HE_sbp3) / 2;
@@ -109,12 +114,12 @@ run;
 
 %let vv = 
 year year_g psu wt_adj kstrata
-age sex town_t educ_g ho_incm bmi_g marri_g health_g
+age age_g sex town_t educ_g ho_incm bmi_g marri_g health_g
 stress_g drinking_g smoking_g
 
 prg_g drug_g diabetes_g
 
-HE_ht HE_wt HE_wc HE_BMI HE_sbp HE_glu HE_TG HE_HDL_st2 HE_chol
+HE_wc HE_BMI HE_sbp HE_glu HE_TG HE_HDL_st2 HE_chol
 tyg tyg_bmi absi tyg_absi
 
 tyg_g tyg_bmi_g tyg_absi_g
