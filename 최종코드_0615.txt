@@ -1,0 +1,1064 @@
+libname a 'C:\Users\user\Desktop\CC_NNTP\R1\raw_data'; /*raw data*/ 
+libname b 'C:\Users\user\Desktop\CC_NNTP\R1\data'; /*new data*/
+
+
+/*컬럼 추출*/
+data change13; set a.HN13_all;
+keep
+year age sex town_t educ ho_incm HE_ht HE_WT HE_BMI marri_1 D_1_1 BD1_11 BP1 psu wt_itvex kstrata BS3_1 BS12_2 BS3_2
+DF2_dg DI1_dg DI2_dg DI3_dg  DI6_dg DM3_dg  DJ8_dg  DE1_dg DL1_dg BS6_3 ;
+run;
+data change14; set a.HN14_all;
+keep
+year age sex town_t educ ho_incm HE_ht HE_WT HE_BMI marri_1 D_1_1 BD1_11 BP1 psu wt_itvex kstrata BS3_1 BS12_2 BS3_2
+DF2_dg DI1_dg DI2_dg DI3_dg  DI6_dg DM3_dg  DJ8_dg  DE1_dg DL1_dg BS6_3;
+run;
+data change15; set a.HN15_all;
+keep
+year age sex town_t educ ho_incm HE_ht HE_WT HE_BMI marri_1 D_1_1 BD1_11 BP1 psu wt_itvex kstrata BS3_1 BS12_2 BS3_2
+DF2_dg DI1_dg DI2_dg DI3_dg  DI6_dg DM3_dg  DJ8_dg  DE1_dg DL1_dg BS6_3;
+run;
+data change16; set a.HN16_all;
+keep
+year age sex town_t educ ho_incm HE_ht HE_WT HE_BMI marri_1 D_1_1 BD1_11 BP1 psu wt_itvex kstrata BS3_1 BS12_2 BS3_2
+DF2_dg DI1_dg DI2_dg DI3_dg  DI6_dg DM3_dg  DJ8_dg  DE1_dg DL1_dg BS6_3;
+run;
+
+data change17; set a.HN17_all;
+keep
+year age sex town_t educ ho_incm HE_ht HE_WT HE_BMI marri_1 D_1_1 BD1_11 BP1 psu wt_itvex kstrata BS3_1 BS12_2 BS3_2
+DF2_dg DI1_dg DI2_dg DI3_dg  DI6_dg DM3_dg  DJ8_dg  DE1_dg DL1_dg BS6_3;
+run;
+
+/*18년부터 전담 분류됨*/
+data change18; set a.HN18_all;
+keep
+year age sex town_t educ ho_incm HE_ht HE_WT HE_BMI marri_1 D_1_1 BD1_11 BP1 psu wt_itvex kstrata BS3_1 BS12_2 BS12_47 BS3_2 
+DF2_dg DI1_dg DI2_dg DI3_dg  DI6_dg DM3_dg  DJ8_dg  DE1_dg DL1_dg BS6_3;
+run;
+
+data change19; set a.HN19_all;
+keep
+year age sex town_t educ ho_incm HE_ht HE_WT HE_BMI marri_1 D_1_1 BD1_11 BP1 psu wt_itvex kstrata BS3_1 BS12_2 BS12_47 BS3_2
+DF2_dg DI1_dg DI2_dg DI3_dg  DI6_dg DM3_dg  DJ8_dg  DE1_dg DL1_dg BS6_3;
+run;
+
+data change20; set a.HN20_all;
+keep
+year age sex town_t educ ho_incm HE_ht HE_WT HE_BMI marri_1 D_1_1 BD1_11 BP1 psu wt_itvex kstrata BS3_1 BS12_2 BS12_47 BS3_2
+DF2_dg DI1_dg DI2_dg DI3_dg  DI6_dg DM3_dg  DJ8_dg  DE1_dg DL1_dg BS6_3;
+run;
+
+data change21; set a.HN21_all;
+keep
+year age sex town_t educ ho_incm HE_ht HE_WT HE_BMI marri_1 D_1_1 BD1_11 BP1 psu wt_itvex kstrata BS3_1 BS12_2 BS12_47 BS3_2
+DF2_dg DI1_dg DI2_dg DI3_dg  DI6_dg DM3_dg  DJ8_dg  DE1_dg DL1_dg BS6_3;
+run;
+ 
+
+/*rename*/
+data v13; 
+set change13; 
+rename 
+BS3_1=CC BS12_2=NNTP BS3_2=CPD BS6_3=CPD_2;
+run;
+data v14; 
+set change14; 
+rename 
+BS3_1=CC BS12_2=NNTP BS3_2=CPD BS6_3=CPD_2;
+run;
+data v15; 
+set change15; 
+rename 
+BS3_1=CC BS12_2=NNTP BS3_2=CPD BS6_3=CPD_2;
+run;
+data v16; 
+set change16; 
+rename 
+BS3_1=CC BS12_2=NNTP BS3_2=CPD BS6_3=CPD_2;
+run;
+
+data v17; 
+set change17; 
+rename 
+BS3_1=CC BS12_2=NNTP BS3_2=CPD BS6_3=CPD_2;
+run;
+
+data v18; 
+set change18; 
+rename 
+BS3_1=CC BS12_47=HTP BS12_2=NVP  BS3_2=CPD BS6_3=CPD_2;
+run;
+data v19; 
+set change19; 
+rename 
+BS3_1=CC BS12_47=HTP BS12_2=NVP  BS3_2=CPD BS6_3=CPD_2;
+run;
+
+data v20; 
+set change20; 
+rename 
+BS3_1=CC BS12_47=HTP BS12_2=NVP  BS3_2=CPD BS6_3=CPD_2;
+run;
+
+data v21; 
+set change21; 
+rename 
+BS3_1=CC BS12_47=HTP BS12_2=NVP  BS3_2=CPD BS6_3=CPD_2;
+run;
+
+ 
+
+/*total*/
+data y; 
+set v13 v14 v15 v16 v17 v18 v19 v20 v21;
+run; 
+
+proc sql;
+  select count(*) as total_obs 
+  from y;
+quit; /*69776*/
+proc freq data=y;
+by year;
+table NNTP NVP HTP CPD;
+run;
+
+
+
+/*checking*/
+proc freq data=y; 
+table NNTP NVP HTP  ;
+run;
+proc freq data=y; 
+table CC CPD_2;
+run;
+
+
+/*age classify*/
+data y1; set y; 
+if 19<=age<40 then age_g=1;
+else if 40<=age<65 then age_g=2;
+else if 65<=age then age_g=3;
+else if 1<=age<19 then age_g=8;
+run;
+
+proc freq data=y1;
+table age_g;
+run; /*8번 -> 13662*/
+
+/*education level*/
+data y2; set y1; 
+if educ in (1 2 3) then educ_g=1; /*Elementary school or lower education*/
+else if educ=4 then educ_g=2; /*Middle school */
+else if educ=5 then educ_g=3; /*High school*/
+else if educ in (6 7 8) then educ_g=4; /*Colleage or higher education*/
+else if educ in (88 99) then educ_g=8;
+run;
+proc freq data=y2;
+table educ_g;
+run;
+
+/*bmi classify*/
+data y3;
+set y2;
+if he_BMI=. then he_BMI=(he_wt/(he_ht*he_ht))*10000;
+run;
+data y4;
+set y3;
+if 0< he_BMI <18.5 then bmi=1; /*Underweight*/
+else if 18.5<= he_BMI < 23 then bmi=2; /*Normal*/
+else if 23<= he_BMI < 25 then bmi=3; /*Overweight*/ 
+else if 25<= he_BMI then bmi=4;/*Obesity*/
+else bmi=.;
+run;
+proc freq data=y4;
+table bmi;
+run;
+
+/*marital status*/
+data y5;
+set y4;
+if marri_1=1 then marry_g=1; /*married*/
+else if marri_1=2 then marry_g=2; /*unmarried*/
+else if marri_1=9 then marry_g=8;
+run; 
+proc freq data=y5;
+table marry_g;
+run;
+
+/*Subjective health level*/
+data y6;
+set y5;
+if D_1_1 in (1 2) then health=1; /*high*/
+else if D_1_1=3 then health=2; /*middle*/
+else if D_1_1 in (4 5) then health=3; /*low*/
+else if D_1_1=9 then health=8;
+run; 
+proc freq data=y6;
+table health;
+run;
+
+/*Alcohol consumption, days/month*/
+proc freq data=y6;
+table BD1_11;
+run;
+data y7;
+set y6;
+if BD1_11 in (1 2) then drinking_g=1; /* 1 < */
+else if BD1_11 in (3 4) then drinking_g=2; /* 1-4 days/month  */
+else if BD1_11 in (5 6) then drinking_g=3; /* 5-30 days/month */
+else if BD1_11 in (8 9) then drinking_g=8;
+run; 
+proc freq data=y7;
+table drinking_g;
+run;
+
+/*stress classify*/
+proc freq data=y7;
+table BP1;
+run;
+data y8;
+set y7;
+if BP1 in (1 2) then stress=1; /*High*/
+else if BP1=3 then stress=2; /*Middle*/
+else if BP1=4 then stress=3; /*Low*/
+else if BP1 in (8 9) then stress=8;
+run; 
+proc freq data=y8;
+table stress;
+run;
+
+
+
+/*질병 시작*/
+/*순환기계*/
+proc freq data=y8;
+table DI1_dg DI2_dg DI3_dg DI6_dg; 
+run;
+data y9;
+set y8;
+if DI1_dg in (0 8) then DI1_dg_g=0; /*No*/
+else if DI1_dg=1 then DI1_dg_g=1; /*Yes*/ /*고혈압*/
+else if DI1_dg=9 then DI1_dg_g=8;
+run; 
+data y9;
+set y9;
+if DI2_dg in (0 8) then DI2_dg_g=0; /*No*/
+else if DI2_dg=1 then DI2_dg_g=1; /*Yes*/ /*이상지질혈증 */
+else if DI2_dg=9 then DI2_dg_g=8;
+run; 
+data y9;
+set y9;
+if DI3_dg in (0 8) then DI3_dg_g=0; /*No*/
+else if DI3_dg=1 then DI3_dg_g=1; /*Yes*/ /*뇌졸중*/
+else if DI3_dg=9 then DI3_dg_g=8;
+run; 
+data y9;
+set y9;
+if DI6_dg in (0 8) then DI6_dg_g=0; /*No*/
+else if DI6_dg=1 then DI6_dg_g=1; /*Yes*/ /*협심증*/
+else if DI6_dg=9 then DI6_dg_g=8;
+run; 
+proc freq data=y9;
+table DI1_dg_g DI2_dg_g DI3_dg_g  DI6_dg_g; 
+run;
+
+/*근골격계*/
+proc freq data=y9;
+table  DM3_dg; 
+run;
+data y10;
+set y9;
+if DM3_dg in (0 8) then DM3_dg_g=0; /*No*/
+else if DM3_dg=1 then DM3_dg_g=1; /*Yes*/ /*류마티스성 관절염*/
+else if DM3_dg=9 then DM3_dg_g=8;
+run; 
+proc freq data=y10;
+table DM3_dg_g; 
+run;
+
+/*호흡기계*/
+proc freq data=y10;
+table  DJ8_dg; 
+run;
+data y11;
+set y10;
+if DJ8_dg in (0 8)  then DJ8_dg_g=0; /*No*/
+else if DJ8_dg=1 then DJ8_dg_g=1; /*Yes*/ /*알레르기 비염*/
+else if DJ8_dg=9 then DJ8_dg_g=8;
+run;
+proc freq data=y11;
+table  DJ8_dg_g; 
+run;
+
+
+proc freq data=y11;
+table DE1_dg DL1_dg; 
+run;
+data y12;
+set y11;
+if DE1_dg in (0 8) then DE1_dg_g=0; /*No*/
+else if DE1_dg=1 then DE1_dg_g=1; /*Yes*/ /*당뇨*/
+else if DE1_dg=9 then DE1_dg_g=8;
+run;
+data y12;
+set y12;
+if DL1_dg in (0 8) then DL1_dg_g=0; /*No*/
+else if DL1_dg=1 then DL1_dg_g=1; /*Yes*/ /*아토피 피부염*/
+else if DL1_dg=9 then DL1_dg_g=8;
+run;
+proc freq data=y12;
+table  DE1_dg_g DL1_dg_g; 
+run;
+
+proc sql;
+  select count(*) as total_obs 
+  from y12;
+quit; /*69776*/
+
+
+/*depression*/
+proc freq data=y12;
+table  DF2_dg;
+run; 
+proc freq data=y12;
+table DF2_dg*year;
+run; 
+data y13;
+set y12;
+if DF2_dg in (0 8) then depression=0;
+else if DF2_dg=1 then depression=1;
+else if DF2_dg=9 then depression=8;
+run;
+proc freq data=y13;
+table depression;
+run;
+
+
+/*CC */
+proc freq data=y13;
+table CC; 
+run;
+data y14; set y13; 
+if CC in (1 2 3) then CC_g = 1; /*yes*/
+else if CC in (8 9)  then CC_g = 0; /*no*/  
+run;
+proc freq data=y14;
+table CC_g; 
+run;
+
+/*proc freq data=y14;*/
+/*table NNTP; */
+/*run;*/
+/*data y15; set y14;*/
+/*where year in (2013 2014 2015 2016 2017); */
+/*if NNTP=1 then NNTP_g=1; */
+/*else if NNTP in (2 8 9) then NNTP_g=0;*/
+/*else NNTP_g = .; */
+/*run;*/
+/*data y15; set y15;*/
+/*where year=2018; */
+/*if HTP=1 or NVP=1 then NNTP_g=1; */
+/*else if (HTP in (0 8 9) and NVP in (2 8 9)) then NNTP_g=0; */
+/*else NNTP_g = .; */
+/*run; */
+/*data y16; set y15;*/
+/*where year in (2019 2020 2021); */
+/*if (HTP in (1 2 3) or NVP = 1) then NNTP_g = 1;*/
+/*else if (HTP in (8 9) and NVP in (2 8 9)) then NNTP_g = 0; */
+/*else NNTP_g = .; */
+/*proc freq data=y16;*/
+/*table NNTP_g; */
+/*run;*/
+
+data y15; 
+    set y14;
+    /* 2013-2017년 데이터 처리 */
+    if 2013 <= year <= 2017 then do;
+        if NNTP = 1 then NNTP_g = 1; 
+        else if NNTP in (2, 8, 9) then NNTP_g = 0; 
+    end;
+
+    /* 2018년 데이터 처리 */
+    else if year = 2018 then do;
+        if HTP = 1 or NVP = 1 then NNTP_g = 1; 
+        else if (HTP in (0, 8, 9) and NVP in (2, 8, 9)) then NNTP_g = 0; 
+    end;
+
+    /* 2019-2021년 데이터 처리 */
+    else if 2019 <= year <= 2021 then do;
+        if (HTP in (1, 2, 3) or NVP = 1) then NNTP_g = 1; 
+        else if (HTP in (8, 9) and NVP in (2, 8, 9)) then NNTP_g = 0; 
+    end;
+run;
+proc freq data=y15;
+table NNTP_g; /*2290*/
+run;
+
+/*smoking classify */
+data y16;
+set y15;
+    /* smoking 변수 초기화 */
+smoking = .; 
+if NNTP_g=0 and CC_g = 1 then smoking=1; /*CC만*/ /*18347*/
+else if NNTP_g=1 and CC_g =1 then smoking=2; /*NNTP+CC*/  /*2258*/
+else smoking=8; /*4070*/
+run;
+proc freq data=y16;
+table smoking; 
+run;
+
+/*else if NNTP_g=0 and CC_g =0 or NNTP_g=1 and CC_g =0 then smoking=3;*/
+
+
+/*onlyCC classify */
+data y17;
+set y16;
+if smoking =1  then onlyCC=1; /*yes*/
+else if smoking=8 then onlyCC=8;  
+else onlyCC=0;
+run;
+proc freq data=y17;
+table onlyCC; 
+run;
+
+/*bothNNTP classify */
+data y18;
+set y17;
+if smoking =2 then bothNNTP=1; /*yes*/ 
+else if smoking=8 then bothNNTP=8; 
+else bothNNTP=0;  /*no*/ 
+run;
+proc freq data=y18;
+table bothNNTP; 
+run;
+proc freq data=y18;
+table smoking; 
+run;
+
+proc freq data=y18;
+  table CPD;
+run;
+
+data y19;
+  set y18;
+
+  /* 1) 우선 CPD와 CPD_2 중 쓸 수 있는 값을 선택 */
+  if CPD not in (., 888, 999) then CPD_final = CPD;
+  else if CPD_2 not in (., 888, 999) then CPD_final = CPD_2;
+  else CPD_final = .;
+
+  /* 2) CPD_g 분류 */
+  if 0 <= CPD_final < 10 then CPD_g = 1;                  /* Light smoker */
+  else if 10 <= CPD_final < 20 then CPD_g = 2;            /* Moderate smoker */
+  else if 20 <= CPD_final <= 70 then CPD_g = 3;           /* Heavy smoker */                  /* 모름/무응답 */ /*10*/
+  else if CPD in (888 999) or CPD_2 in (888 999) then CPD_g = 8;  /* 비해당 */
+  else CPD_g = .;                                         /* 진짜 결측 */
+
+run;
+
+proc freq data=y19;
+  table CPD_g;
+run;
+
+
+
+
+proc sort data=y19 nodupkey out=test;
+by year psu;
+run;
+
+/*/*가중치*/*/
+/*data _2013 _2014 _2015   _2016   _2017   _2018   _2019   _2020   _2021;*/
+/*set test;*/
+/*if year=2013 then output _2013;*/
+/*if year=2014 then output _2014;*/
+/*if year=2015 then output _2015;*/
+/*if year=2016 then output _2016;*/
+/*if year=2017 then output _2017;*/
+/*if year=2018 then output _2018;*/
+/*if year=2019 then output _2019;*/
+/*if year=2020 then output _2020;*/
+/*if year=2021 then output _2021;*/
+/*run;
+
+/*total weight_base*/
+data t1;
+set y19;
+label wt_total='total weight';
+if year=2013 then wt_total=wt_itvex*(192/1728);
+else if year=2014 then wt_total=wt_itvex*(192/1728);
+else if year=2015 then wt_total=wt_itvex*(192/1728);
+else if year=2016 then wt_total=wt_itvex*(192/1728);
+else if year=2017 then wt_total=wt_itvex*(192/1728);
+else if year=2018 then wt_total=wt_itvex*(192/1728);
+else if year=2019 then wt_total=wt_itvex*(192/1728);
+else if year=2020 then wt_total=wt_itvex*(192/1728);
+else if year=2021 then wt_total=wt_itvex*(192/1728);
+run;
+
+proc sql;
+  select count(*) as total_obs 
+  from t1;
+quit; /*69776*/
+
+/*checkpoint*/
+proc freq data=t1;
+table
+year
+sex
+age_g
+town_t
+CPD_g
+educ_g
+ho_incm
+bmi
+marry_g
+health
+stress
+drinking_g
+smoking
+onlyCC
+bothNNTP
+depression
+DI1_dg_g 
+DI2_dg_g 
+DI3_dg_g
+DI6_dg_g
+DM3_dg_g 
+DJ8_dg_g
+DE1_dg_g 
+DL1_dg_g;
+run;
+
+
+
+
+/*unknown-> subject=0*/
+data t2; 
+set t1; 
+if age_g=8 then subject=0; 
+run; 
+proc freq data=t2; table subject; run;  
+data t2; 
+set t2; 
+if educ_g=8 then subject=0; 
+run; 
+proc freq data=t2; table subject; run;  /*1154*/
+
+data t2; 
+set t2; 
+if CPD_g=8 then subject=0; 
+run; 
+proc freq data=t2; table subject; run; /*46253*/
+data t2; 
+set t2; 
+if ho_incm=8 then subject=0; 
+run; 
+proc freq data=t2; table subject; run; /*46253  */
+
+data t2; 
+set t2; 
+if marry_g=8 then subject=0; 
+run; 
+proc freq data=t2; table subject; run;  /*46279*/
+data t2; 
+set t2; 
+if health=8 then subject=0; 
+run; 
+proc freq data=t2; table subject; run;  /*46279  */
+data t2; 
+set t2; 
+if drinking_g=8 then subject=0; 
+run; 
+proc freq data=t2; table subject; run; /*46875*/
+data t2; 
+set t2; 
+if stress=8 then subject=0; 
+run; 
+proc freq data=t2; table subject; run; /*46882*/
+data t2; 
+set t2;
+if smoking=8 then subject=0; 
+run; 
+proc freq data=t2; table subject; run; /*50896*/
+data t2; 
+set t2;
+if onlyCC =8 then subject=0; 
+run; 
+proc freq data=t2; table subject; run; /*50896*/
+data t2; 
+set t2;
+if bothNNTP =8 then subject=0; 
+run; 
+proc freq data=t2; table subject; run; /*50896*/
+data t2; 
+set t2;
+if depression=8 then subject=0; 
+run; 
+proc freq data=t2; table subject; run; /*50896  */
+data t2; 
+set t2; 
+if DI1_dg_g =8 then subject=0; 
+run; 
+proc freq data=t2; table subject; run; /*50896*/
+data t2; 
+set t2; 
+if DI2_dg_g =8 then subject=0; 
+run; 
+proc freq data=t2; table subject; run;
+data t2; 
+set t2; 
+if DI3_dg_g=8 then subject=0; 
+run; 
+proc freq data=t2; table subject; run;
+data t2; 
+set t2;
+if DI6_dg_g=8 then subject=0; 
+run; 
+proc freq data=t2; table subject; run;
+data t2; 
+set t2; 
+if DM3_dg_g=8 then subject=0; 
+run; 
+proc freq data=t2; table subject; run;
+data t2; 
+set t2; 
+if DJ8_dg_g=8 then subject=0; 
+run; 
+proc freq data=t2; table subject; run;
+data t2; 
+set t2; 
+if DE1_dg_g=8 then subject=0; 
+run; 
+proc freq data=t2; table subject; run;
+data t2; 
+set t2;  
+if DL1_dg_g=8 then subject=0; 
+run; 
+proc freq data=t2; table subject; run;
+data t3; set t2;
+if subject=. then subject=1;
+run; 
+proc freq data=t3;
+table subject;
+run;  /*sub1=18880    , sub0=50896    */  
+
+
+/*subject=1에서 결측 제거*/
+data t4; 
+set t3; 
+if sex=. then delete;
+else if sex="" then delete;
+run; 
+proc freq data=t4; table subject; run; /*결측x*/
+data t4; 
+set t4; 
+if CPD_g =. then delete;
+else if CPD_g ="" then delete;
+run; 
+proc freq data=t4; table subject; run; /*결측x*/
+
+
+data t4; 
+set t4; 
+if age_g=. then delete;
+else if age_g="" then delete;
+run; 
+proc freq data=t4; table subject; run; /*결측x*/
+data t4; 
+set t4; 
+if town_t=. then delete;
+else if town_t="" then delete;
+run; 
+proc freq data=t4; table subject; run; /*sub1=43624  */ /*결측x*/ 
+data t4; 
+set t4; 
+if educ_g=. then delete;
+else if educ_g="" then delete;
+run; 
+proc freq data=t4; table subject; run; /*sub1=43624*/
+data t4; 
+set t4;  
+if bmi=. then delete;
+else if bmi="" then delete;
+run; 
+proc freq data=t4; table subject; run; /*sub1=43451*/
+data t4; 
+set t4; 
+if marry_g=. then delete;
+else if marry_g="" then delete;
+run; 
+proc freq data=t4; table subject; run;  /*sub1=43451 */ /*결측x*/
+data t4; 
+set t4; 
+if ho_incm=. then delete;
+else if ho_incm="" then delete;
+run; 
+proc freq data=t4; table subject; run; /*sub1=43322*/ 
+
+data t4; 
+set t4;  
+if health=. then delete;
+else if health="" then delete;
+run; 
+proc freq data=t4; table subject; run; /*sub1=43322*/ /*결측x*/
+data t4; 
+set t4;  
+if drinking_g=. then delete;
+else if drinking_g="" then delete;
+run; 
+proc freq data=t4; table subject; run; /*sub1=43322*/ /*결측x*/
+data t4; 
+set t4; 
+if stress=. then delete;
+else if stress="" then delete;
+run; 
+proc freq data=t4; table subject; run; /*sub1=43322*/ /*결측x*/
+data t4; 
+set t4; 
+if smoking=. then delete;
+else if smoking="" then delete;
+run; 
+proc freq data=t4; table subject; run; /*sub1=43322*/ /*결측x*/
+data t4; 
+set t4; 
+if onlyCC=. then delete;
+else if onlyCC="" then delete;
+run; 
+proc freq data=t4; table subject; run; /*sub1=43322*/ /*결측x*/ 
+data t4; 
+set t4; 
+if bothNNTP=. then delete;
+else if bothNNTP="" then delete;
+run; 
+proc freq data=t4; table subject; run; /*sub1=43322*/ /*결측x*/
+
+data t4; 
+set t4; 
+if depression=. then delete;
+else if depression="" then delete;
+run; 
+proc freq data=t4; table subject; run;  /*질병 결측X*/
+data t4; 
+set t4; 
+if DI1_dg_g=. then delete;
+else if DI1_dg_g="" then delete;
+run; 
+proc freq data=t4; table subject; run; 
+data t4; 
+set t4; 
+if DI2_dg_g=. then delete;
+else if DI2_dg_g="" then delete;
+run; 
+proc freq data=t4; table subject; run; 
+data t4; 
+set t4; 
+if DI3_dg_g=. then delete;
+else if DI3_dg_g="" then delete;
+run; 
+proc freq data=t4; table subject; run; 
+data t4; 
+set t4;  
+if DI6_dg_g=. then delete;
+else if DI6_dg_g="" then delete;
+run; 
+proc freq data=t4; table subject; run; 
+data t4; 
+set t4;  
+if DM3_dg_g=. then delete;
+else if DM3_dg_g="" then delete;
+run; 
+proc freq data=t4; table subject; run; 
+data t4; 
+set t4;  
+if DJ8_dg_g=. then delete;
+else if DJ8_dg_g="" then delete;
+run; 
+proc freq data=t4; table subject; run; 
+data t4; 
+set t4; 
+if DE1_dg_g=. then delete;
+else if DE1_dg_g="" then delete;
+run; 
+proc freq data=t4; table subject; run; 
+data t4; 
+set t4; 
+if DL1_dg_g=. then delete;
+else if DL1_dg_g="" then delete;
+run; 
+proc freq data=t4; table subject; run; 
+
+
+
+
+proc freq data=t4;
+table subject;
+run; /*sub1=18773  , sub0=46231   */
+
+
+/*for checking*/
+proc freq data=t4;
+where subject=1;
+table 
+year
+sex
+age_g
+town_t
+educ_g
+ho_incm
+bmi
+marry_g
+health
+stress
+drinking_g
+smoking
+onlyCC
+bothNNTP
+depression
+DI1_dg_g 
+DI2_dg_g 
+DI3_dg_g
+DI6_dg_g
+DM3_dg_g 
+DJ8_dg_g
+DE1_dg_g 
+DL1_dg_g;
+run; /*결측 , unknown .없음 */
+proc freq data=t4;
+tables year*smoking;
+run;
+
+
+
+/*Table1*/
+/*arrangement by subject*/
+proc sort data=t4;
+by subject;
+run;
+/*Table1 total weighted*/
+proc surveyfreq data=t4 nomcar;
+strata kstrata;
+cluster psu;
+weight  wt_total;
+by subject;
+table   
+smoking
+age_g
+sex
+town_t
+educ_g
+ho_incm
+bmi
+marry_g
+health
+stress
+drinking_g
+depression
+DI1_dg_g 
+DI2_dg_g 
+DI3_dg_g
+DI6_dg_g
+DM3_dg_g 
+DJ8_dg_g
+DE1_dg_g 
+DL1_dg_g
+/cl row column;
+run;
+
+
+
+
+/*detail_crude*/
+proc sort data=t4;
+by subject;
+run;
+proc surveyfreq data=t4 nomcar;
+by subject;
+table   
+smoking*age_g
+smoking*sex
+smoking*town_t
+smoking*CPD_g
+smoking*educ_g
+smoking*ho_incm
+smoking*bmi
+smoking*marry_g
+smoking*health
+smoking*stress
+smoking*drinking_g
+smoking*DI3_dg_g
+smoking*DI6_dg_g
+smoking*DI1_dg_g 
+smoking*DI2_dg_g 
+smoking*DE1_dg_g
+smoking*DM3_dg_g 
+smoking*DJ8_dg_g
+smoking*DL1_dg_g
+smoking*depression
+ /cl row column;
+run;
+
+/*Table1 detail weighted*/
+proc surveyfreq data=t4 nomcar;
+strata kstrata;
+cluster psu;
+weight  wt_total;
+by subject;
+table   
+smoking*age_g
+smoking*sex
+smoking*town_t
+smoking*CPD_g
+smoking*educ_g
+smoking*ho_incm
+smoking*bmi
+smoking*marry_g
+smoking*health
+smoking*stress
+smoking*drinking_g
+smoking*DI3_dg_g
+smoking*DI6_dg_g
+smoking*DI1_dg_g 
+smoking*DI2_dg_g 
+smoking*DE1_dg_g
+smoking*DM3_dg_g 
+smoking*DJ8_dg_g
+smoking*DL1_dg_g
+smoking*depression
+ /cl row column;
+run;
+
+
+
+
+/*bmi
+educ_g
+ho_incm
+추가*/
+
+
+data r1;
+set t4;
+where subject=1;
+run;
+proc surveylogistic data=r1;
+   class smoking (ref='1') / param=ref;
+   model DI3_dg_g(event='1') = smoking age_g sex CPD_g bmi educ_g ho_incm;
+   strata kstrata;
+   cluster psu;
+   weight wt_total;
+run;
+proc surveylogistic data=r1;
+   class smoking (ref='1') / param=ref;
+   model DI6_dg_g(event='1') = smoking age_g sex CPD_g bmi educ_g ho_incm;
+   strata kstrata;
+   strata kstrata;
+   cluster psu;
+   weight wt_total;
+run;
+proc surveylogistic data=r1;
+   class smoking (ref='1') / param=ref;
+   model DI1_dg_g(event='1') =smoking age_g sex CPD_g bmi educ_g ho_incm;
+   strata kstrata;
+   strata kstrata;
+   cluster psu;
+   weight wt_total;
+run;
+proc surveylogistic data=r1;
+   class smoking (ref='1') / param=ref;
+   model DI2_dg_g(event='1 ') = smoking age_g sex CPD_g bmi educ_g ho_incm;
+   strata kstrata;
+   strata kstrata;
+   cluster psu;
+   weight wt_total;
+run;
+proc surveylogistic data=r1;
+   class smoking (ref='1') / param=ref;
+   model DE1_dg_g(event='1') = smoking age_g sex CPD_g bmi educ_g ho_incm;
+   strata kstrata;
+   strata kstrata;
+   cluster psu;
+   weight wt_total;
+run;
+proc surveylogistic data=r1;
+   class smoking (ref='1') / param=ref;
+   model DM3_dg_g(event='1 ') = smoking age_g sex CPD_g bmi educ_g ho_incm;
+   strata kstrata;
+   strata kstrata;
+   cluster psu;
+   weight wt_total;
+run;
+proc surveylogistic data=r1;
+   class smoking (ref='1') / param=ref;
+   model DJ8_dg_g(event='1 ') = smoking age_g sex CPD_g bmi educ_g ho_incm;
+   strata kstrata;
+   strata kstrata;
+   cluster psu;
+   weight wt_total;
+run;
+proc surveylogistic data=r1;
+   class smoking (ref='1') / param=ref;
+   model DL1_dg_g(event='1') = smoking age_g sex CPD_g bmi educ_g ho_incm;
+   strata kstrata;
+   strata kstrata;
+   cluster psu;
+   weight wt_total;
+run;
+proc surveylogistic data=r1;
+   class smoking (ref='1') / param=ref;
+   model depression(event='1') = smoking age_g sex CPD_g bmi educ_g ho_incm;
+   strata kstrata;
+   strata kstrata;
+   cluster psu;
+   weight wt_total;
+run;
+
+
+/*sex interaction analysis*/
+/*성별에 따라 효과가 통계적으로 달라지는지 검정	*/
+/*	interaction term (smoking*sex)의 p-value 보고*/
+data r1;
+set t4;
+where subject=1;
+run;
+
+%let outcomes = DI3_dg_g DI6_dg_g DI1_dg_g DI2_dg_g DE1_dg_g DM3_dg_g DJ8_dg_g DL1_dg_g depression;
+
+%macro interaction_models;
+  %do i = 1 %to %sysfunc(countw(&outcomes));
+    %let yvar = %scan(&outcomes, &i);
+    
+    proc surveylogistic data=r1;
+       class smoking (ref='1') sex (ref='1') / param=ref;
+       model &yvar(event='1') = smoking sex smoking*sex age_g CPD_g bmi educ_g ho_incm;
+       strata kstrata;
+       cluster psu;
+       weight wt_total;
+    run;
+
+  %end;
+%mend;
+
+%interaction_models;
+
+
+
+
+proc surveylogistic data=r1;
+   where sex = 1;
+   class smoking (ref='1') / param=ref;
+   model DI3_dg_g(event='1') = smoking age_g CPD_g bmi educ_g ho_incm;
+   strata kstrata;
+   cluster psu;
+   weight wt_total;
+run;
+
+proc surveylogistic data=r1;
+   where sex = 2;
+   class smoking (ref='1') / param=ref;
+   model DI3_dg_g(event='1') = smoking age_g CPD_g bmi educ_g ho_incm;
+   strata kstrata;
+   cluster psu;
+   weight wt_total;
+run;
