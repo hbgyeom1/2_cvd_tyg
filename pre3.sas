@@ -1,7 +1,7 @@
-libname ss "C:\Users\user\Documents\data\2_cvd_tyg";
+libname ss "C:\Users\user\Documents\2_cvd_tyg\data\";
 
 proc import
-datafile="C:\Users\user\Documents\data\2_cvd_tyg\dd.csv"
+datafile="C:\Users\user\Documents\2_cvd_tyg\data\dd.csv"
 out=work.dd
 dbms=csv
 replace;

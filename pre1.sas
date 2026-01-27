@@ -1,5 +1,5 @@
 libname kn "C:\Users\user\Documents\data\knhanes";
-libname ss "C:\Users\user\Documents\data\2_cvd_tyg";
+libname ss "C:\Users\user\Documents\2_cvd_tyg\data";
 
 %macro mm(y1, y2);
 data dd;

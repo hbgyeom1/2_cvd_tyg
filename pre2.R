@@ -1,7 +1,7 @@
 setwd("C:/Users/user/Documents/2_cvd_tyg")
 library(data.table);library(haven);library(magrittr);library(CVrisk)
 
-dd <- read_sas("C:/Users/user/Documents/data/2_cvd_tyg/dd.sas7bdat") %>% setDT()
+dd <- read_sas("C:/Users/user/Documents/2_cvd_tyg/data/dd.sas7bdat") %>% setDT()
 dd[, sex_g := fifelse(sex == 1, "male", "female")]
 
 dd[, frs := ascvd_10y_frs(
@@ -19,4 +19,4 @@ dd[, c("age", "HE_sbp", "HE_chol",
 n_count <- colSums(is.na(dd))
 dd <- dd[complete.cases(dd)]
 
-fwrite(dd, "C:/Users/user/Documents/data/2_cvd_tyg/dd.csv")
+fwrite(dd, "C:/Users/user/Documents/2_cvd_tyg/data/dd.csv")
