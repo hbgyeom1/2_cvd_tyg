@@ -13,9 +13,9 @@ run;
 
 %let vv =
 year town_t psu sex age ho_incm educ marri_1 wt_itvex kstrata 
-D_1_1 BD1_11 BP1 BS1_1 BS3_1 DI1_2 DE1_dg 
-HE_sbp2 HE_sbp3 HE_sbp HE_ht 
-HE_wt HE_wc HE_BMI HE_glu HE_chol HE_HDL_st2 HE_TG 
+D_1_1 BD1_11 BP1 BS1_1 BS3_1 DI1_2 DE1_dg HE_prg
+HE_sbp2 HE_sbp3 HE_sbp
+HE_ht HE_wt HE_wc HE_BMI HE_glu HE_chol HE_HDL_st2 HE_TG 
 DI1_dg DI2_dg DI3_dg DI5_dg DI6_dg;
 
 %mm(07, 21)
@@ -24,8 +24,8 @@ data dd; set dd kn.hn24_all (keep=&vv); run;
 
 data dd; set dd;
 if 30 <= age <45 then age_g = 1;
-if 45 <= age < 60 then age_g = 2;
-if 60 <= age <= 74 then age_g = 3;
+else if 45 <= age < 60 then age_g = 2;
+else if 60 <= age <= 74 then age_g = 3;
 
 if educ in (1 2 3) then educ_g = 1;
 else if educ = 4 then educ_g = 2;
@@ -59,6 +59,9 @@ else if DI1_2 in (1 2 3 4) then drug_g = 1;
 
 if DE1_dg in (0 8) then diabetes_g = 0;
 else if DE1_dg = 1 then diabetes_g = 1;
+
+if HE_prg in (0 8) then prg_g = 0;
+else if HE_prg = 1 then prg_g = 1;
 
 if HE_sbp = . then HE_sbp = (HE_sbp2 + HE_sbp3) / 2;
 
@@ -103,7 +106,8 @@ run;
 
 %let vv = 
 year psu wt_adj kstrata
-age_g sex town_t educ_g ho_incm bmi_g marri_g health_g stress_g drinking_g smoking_g
+age_g sex town_t educ_g ho_incm bmi_g marri_g
+health_g stress_g drinking_g smoking_g prg_g
 tyg_g tyg_bmi_g tyg_absi_g
 age HE_HDL_st2 HE_chol HE_sbp drug_g diabetes_g
 hypertension_g dyslipidemia_g stroke_g mi_g angina_g;
