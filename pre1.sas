@@ -1,0 +1,111 @@
+libname kn "C:\Users\user\Documents\data\knhanes";
+libname ss "C:\Users\user\Documents\data\2_cvd_tyg";
+
+%macro mm(y1, y2);
+data dd;
+set
+%do yy = &y1 %to &y2;
+kn.hn%sysfunc(putn(&yy, Z2.))_all (keep=&vv)
+%end;
+;
+run;
+%mend;
+
+%let vv =
+year town_t psu sex age ho_incm educ marri_1 wt_itvex kstrata 
+D_1_1 BD1_11 BP1 BS1_1 BS3_1 DI1_2 DE1_dg 
+HE_sbp2 HE_sbp3 HE_sbp HE_ht 
+HE_wt HE_wc HE_BMI HE_glu HE_chol HE_HDL_st2 HE_TG 
+DI1_dg DI2_dg DI3_dg DI5_dg DI6_dg;
+
+%mm(07, 21)
+
+data dd; set dd kn.hn24_all (keep=&vv); run;
+
+data dd; set dd;
+if 30 <= age <45 then age_g = 1;
+if 45 <= age < 60 then age_g = 2;
+if 60 <= age <= 74 then age_g = 3;
+
+if educ in (1 2 3) then educ_g = 1;
+else if educ = 4 then educ_g = 2;
+else if educ = 5 then educ_g = 3;
+else if educ in (6 7 8) then educ_g = 4;
+
+if marri_1 = 1 then marri_g = 1;
+else if marri_1 = 2 then marri_g = 2;
+
+if year = 2007 then wt_adj = wt_itvex * (100 / 3380);
+else if year in (2008 2009) then wt_adj = wt_itvex * (200 / 3380);
+else wt_adj = wt_itvex * (192 / 3380);
+
+if D_1_1 in (1 2) then health_g = 1;
+else if D_1_1 = 3 then health_g = 2;
+else if D_1_1 in (4 5) then health_g = 3;
+
+if BD1_11 in (1 2) then drinking_g = 1;
+else if BD1_11 in (3 4) then drinking_g = 2;
+else if BD1_11 in (5 6) then drinking_g = 3;
+
+if BP1 in (1 2) then stress_g = 1;
+else if BP1 = 3 then stress_g = 2;
+else if BP1 = 4 then stress_g = 3;
+
+if (BS1_1 in (1 2) & BS3_1 in (1 2 3)) or BS1_1 = 3
+then smoking_g = (BS1_1 = 2 & BS3_1 in (1 2));
+
+if DI1_2 = 5 then drug_g = 0;
+else if DI1_2 in (1 2 3 4) then drug_g = 1;
+
+if DE1_dg in (0 8) then diabetes_g = 0;
+else if DE1_dg = 1 then diabetes_g = 1;
+
+if HE_sbp = . then HE_sbp = (HE_sbp2 + HE_sbp3) / 2;
+
+if HE_BMI = . then HE_BMI = (HE_wt / (HE_ht * HE_ht)) * 10000;
+
+if 0 < HE_BMI < 18.5 then bmi_g = 1;
+else if 18.5 <= HE_BMI < 23 then bmi_g = 2;
+else if 23 <= HE_BMI < 25 then bmi_g = 3;
+else if HE_BMI >= 25 then bmi_g = 4;
+
+tyg = log((HE_TG * HE_glu) / 2);
+tyg_bmi = tyg * HE_BMI;
+absi = (HE_wc / 100) / (HE_BMI**(2/3) * (HE_ht / 100)**(1/2));
+tyg_absi = tyg * absi;
+
+if DI1_dg in (0 8) then hypertension_g = 0;
+else if DI1_dg = 1 then hypertension_g = 1;
+
+if DI2_dg in (0 8) then dyslipidemia_g = 0;
+else if DI2_dg = 1 then dyslipidemia_g = 1;
+
+if DI3_dg in (0 8) then stroke_g = 0;
+else if DI3_dg = 1 then stroke_g = 1;
+
+if DI5_dg in (0 8) then mi_g = 0;
+else if DI5_dg = 1 then mi_g = 1;
+
+if DI6_dg in (0 8) then angina_g = 0;
+else if DI6_dg = 1 then angina_g = 1;
+run;
+
+proc rank data=dd groups=4 out=dd;
+var tyg tyg_bmi tyg_absi;
+ranks tyg_g tyg_bmi_g tyg_absi_g;
+run;
+
+data dd; set dd;
+tyg_g = tyg_g + 1;
+tyg_bmi_g = tyg_bmi_g + 1;
+tyg_absi_g = tyg_absi_g + 1;
+run;
+
+%let vv = 
+year psu wt_adj kstrata
+age_g sex town_t educ_g ho_incm bmi_g marri_g health_g stress_g drinking_g smoking_g
+tyg_g tyg_bmi_g tyg_absi_g
+age HE_HDL_st2 HE_chol HE_sbp drug_g diabetes_g
+hypertension_g dyslipidemia_g stroke_g mi_g angina_g;
+
+data ss.dd; set dd (keep=&vv); run;
