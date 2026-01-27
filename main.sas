@@ -80,6 +80,21 @@ proc means data=out; class year_g &ff; ways 2; var tyg; run;
 proc means data=out; class year_g &ff; ways 2; var tyg_bmi; run;
 proc means data=out; class year_g &ff; ways 2; var tyg_absi; run;
 
+%macro sub(y);
+%local i v; %let i=1; %let v=%scan(&ff, &i);
+%do %while(&v ne );
 proc surveymeans data=out;
-cluster psu; strata kstrata; weight wt_adj; domain year_g*age_g;
-var frs; run;
+cluster psu; strata kstrata; weight wt_adj; domain year_g*&v;
+var &y;
+run;
+%let i=%eval(&i+1); %let v=%scan(&ff, &i);
+%end;
+%mend;
+
+%sub(frs);
+%sub(tyg);
+%sub(tyg_bmi);
+%sub(tyg_absi);
+
+
+/*Table3.*/
