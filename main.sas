@@ -28,4 +28,3 @@ table tyg_bmi_g*(&vv) / cl row; run;
 proc surveyfreq data=out;
 cluster psu; strata kstrata; weight wt_adj;
 table tyg_absi_g*(&vv) / cl row; run;
-
