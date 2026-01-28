@@ -4,7 +4,7 @@ data out; set ss.out; run;
 
 %let ff = 
 age_g sex town_t educ_g ho_incm bmi_g marri_g
-health_g stress_g drinking_g smoking_g
+health_g stress_g drinking_g smoking_g drug_g diabetes_g
 hypertension_g dyslipidemia_g stroke_g mi_g angina_g;
 
 %let nn = age HE_wc HE_BMI HE_sbp HE_glu HE_TG HE_HDL_st2 HE_chol
