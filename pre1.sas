@@ -14,15 +14,13 @@ run;
 %let vv =
 year town_t psu sex age ho_incm educ marri_1 wt_itvex kstrata 
 D_1_1 BD1_11 BP1 BS1_1 BS3_1 DI1_2 DE1_dg HE_prg
-HE_sbp2 HE_sbp3 HE_sbp
+HE_sbp2 HE_sbp3 HE_sbp HE_AST HE_ALT HE_HB HE_BUN HE_CREA
 HE_ht HE_wt HE_wc HE_BMI HE_glu HE_chol HE_HDL_st2 HE_TG 
 DI1_dg DI2_dg DI3_dg DI5_dg DI6_dg;
 
 %mm(07, 21)
 
-/* uncomment to use 2024
 data dd; set dd kn.hn24_all (keep=&vv); run;
-*/
 
 data dd; set dd;
 if year in (2007 2008 2009) then year_g = 1;
@@ -30,7 +28,7 @@ else if year in (2010 2011 2012) then year_g = 2;
 else if year in (2013 2014 2015) then year_g = 3;
 else if year in (2016 2017 2018) then year_g = 4;
 else if year in (2019 2020 2021) then year_g = 5;
-else if year in (2022 2023 2024) then year_g = 6;
+else if year = 2024 then year_g = 6;
 
 if 30 <= age <45 then age_g = 1;
 else if 45 <= age < 60 then age_g = 2;
@@ -118,6 +116,7 @@ run;
 year year_g psu wt_adj kstrata
 age age_g sex town_t educ_g ho_incm bmi_g marri_g health_g
 stress_g drinking_g smoking_g
+HE_AST HE_ALT HE_HB HE_BUN HE_CREA
 
 prg_g drug_g diabetes_g
 

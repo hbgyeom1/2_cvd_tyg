@@ -2,14 +2,18 @@ setwd("C:/Users/user/Documents/2_cvd_tyg")
 library(data.table);library(haven);library(magrittr);library(CVrisk)
 
 dd <- read_sas("C:/Users/user/Documents/2_cvd_tyg/data/dd.sas7bdat") %>% setDT()
-dd[, sex_g := fifelse(sex == 1, "male", "female")]
 
-prg1 <- dd[prg_g == 1, .N] # 453
-dd[prg_g == 1, prg_g := NA]
+na_age <- dd[, sum(is.na(age_g))]
+dd <- dd[!is.na(age_g)]
+na_prg <- dd[, sum(is.na(prg_g))]
+dd <- dd[!is.na(prg_g)]
+prg_n <- dd[, sum(prg_g == 1)]
+dd <- dd[prg_g != 1]
 
-n_count <- colSums(is.na(dd))
+na_count <- colSums(is.na(dd));na_count
 dd <- dd[complete.cases(dd)]
 
+dd[, sex_g := fifelse(sex == 1, "male", "female")]
 dd[, frs := ascvd_10y_frs(
   gender = sex_g,
   age = age,
@@ -21,8 +25,4 @@ dd[, frs := ascvd_10y_frs(
   diabetes = diabetes_g
 )]
 
-dd[, c("prg_g", "drug_g", "diabetes_g", "sex_g") := NULL]
-
 fwrite(dd, "C:/Users/user/Documents/2_cvd_tyg/data/dd.csv")
-
-n_count
