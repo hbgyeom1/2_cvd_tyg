@@ -6,6 +6,7 @@ dd[, sex_g := fifelse(sex == 1, "male", "female")]
 
 prg1 <- dd[prg_g == 1, .N] # 453
 dd[prg_g == 1, prg_g := NA]
+
 n_count <- colSums(is.na(dd))
 dd <- dd[complete.cases(dd)]
 

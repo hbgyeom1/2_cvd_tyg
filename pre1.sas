@@ -20,7 +20,9 @@ DI1_dg DI2_dg DI3_dg DI5_dg DI6_dg;
 
 %mm(07, 21)
 
+/* uncomment to use 2024
 data dd; set dd kn.hn24_all (keep=&vv); run;
+*/
 
 data dd; set dd;
 if year in (2007 2008 2009) then year_g = 1;
