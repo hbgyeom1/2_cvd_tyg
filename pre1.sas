@@ -23,7 +23,7 @@ HE_ast HE_alt HE_HB HE_BUN HE_crea HE_Uph
 /* diagnostic */
 DI1_dg DI2_dg DI3_dg DI5_dg DI6_dg
 /* additional */
-HE_prg;
+HE_prg HE_fst;
 
 %mm(07, 21)
 
@@ -121,6 +121,6 @@ hypertension_g dyslipidemia_g stroke_g mi_g angina_g
 /* index */
 tyg absi tyg_absi aip mets_ir
 /* additional */
-prg_g;
+prg_g HE_fst;
 
 data ss.dd; set dd (keep=&vv); run;
