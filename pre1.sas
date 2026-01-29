@@ -56,6 +56,9 @@ else if 18.5 <= HE_BMI < 23 then bmi_g = 2;
 else if 23 <= HE_BMI < 25 then bmi_g = 3;
 else if HE_BMI >= 25 then bmi_g = 4;
 
+if marri_1 = 1 then marri_g = 1;
+if marri_1 = 2 then marri_g = 2;
+
 if D_1_1 in (1 2) then health_g = 1;
 else if D_1_1 = 3 then health_g = 2;
 else if D_1_1 in (4 5) then health_g = 3;
@@ -107,14 +110,14 @@ run;
 year year_g psu kstrata wt_adj
 /* demographic */
 age age_g sex town_t educ_g ho_incm bmi_g
-marri_1 health_g stress_g drinking_g smoking_g
+marri_g health_g stress_g drinking_g smoking_g
 /* body */
 HE_sbp HE_wc HE_BMI
 /* lab */
 HE_glu HE_chol HE_HDL_st2 HE_TG
 HE_ast HE_alt HE_HB HE_BUN HE_crea HE_Uph
 /* diagnostic */
-DI1_dg DI2_dg DI3_dg DI5_dg DI6_dg
+hypertension_g dyslipidemia_g stroke_g mi_g angina_g
 /* index */
 tyg absi tyg_absi aip mets_ir
 /* additional */

@@ -3,13 +3,31 @@ libname ss "C:\Users\user\Documents\2_cvd_tyg\data\";
 data out; set ss.out; run;
 
 %let ff = 
-age_g sex town_t educ_g ho_incm bmi_g marri_g
-health_g stress_g drinking_g smoking_g
+age_g sex town_t educ_g ho_incm bmi_g
+marri_g health_g stress_g drinking_g smoking_g
 hypertension_g dyslipidemia_g stroke_g mi_g angina_g;
 
-%let nn = HE_BMI HE_wc absi HE_sbp HE_glu HE_chol HE_HDL_st2
-HE_TG HE_ast HE_alt HE_HB HE_BUN HE_crea
-frs tyg tyg_bmi absi tyg_absi;
+%let nn = age HE_BMI HE_wc absi HE_sbp  
+HE_glu HE_chol HE_HDL_st2 HE_TG
+HE_ast HE_alt HE_HB HE_BUN HE_crea HE_Uph
+tyg tyg_absi aip mets_ir;
+
+/*Table1.*/
+/*crude factor*/
+proc freq data=out; table &ff; run;
+proc freq data=out; table (&ff)*tyg_g; run;
+proc freq data=out; table (&ff)*absi_g; run;
+proc freq data=out; table (&ff)*tyg_absi_g; run;
+proc freq data=out; table (&ff)*aip_g; run;
+proc freq data=out; table (&ff)*mets_ir_g; run;
+
+/*crude numeric*/
+proc means data=out; var &nn; run;
+proc means data=out; class tyg_g; var &nn; run;
+proc means data=out; class tyg_absi_g; var &nn; run;
+proc means data=out; class aip_g; var &nn; run;
+proc means data=out; class mets_ir_g; var &nn; run;
+
 
 %macro sub(y);
 %local i v; %let i=1; %let v=%scan(&ff, &i);
@@ -22,20 +40,9 @@ run;
 %end;
 %mend;
 
-/*Table1.*/
-/*crude factor*/
-proc freq data=out; table &ff; run;
-proc freq data=out; table (&ff)*frs_g; run;
-proc freq data=out; table (&ff)*tyg_g; run;
-proc freq data=out; table (&ff)*tyg_bmi_g; run;
-proc freq data=out; table (&ff)*tyg_absi_g; run;
 
-/*crude numeric*/
-proc means data=out; var &nn; run;
-proc means data=out; class frs_g; var &nn; run;
-proc means data=out; class tyg_g; var &nn; run;
-proc means data=out; class tyg_bmi_g; var &nn; run;
-proc means data=out; class tyg_absi_g; var &nn; run;
+
+
 
 /*weighted factor*/
 proc surveyfreq data=out;
