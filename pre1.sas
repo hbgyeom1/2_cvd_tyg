@@ -101,15 +101,25 @@ if DI6_dg in (0 8) then angina_g = 0;
 else if DI6_dg = 1 then angina_g = 1;
 run;
 
-proc rank data=dd groups=4 out=dd;
+proc means data=dd p25 p50 p75;
 var tyg tyg_bmi tyg_absi;
-ranks tyg_g tyg_bmi_g tyg_absi_g;
 run;
 
 data dd; set dd;
-tyg_g = tyg_g + 1;
-tyg_bmi_g = tyg_bmi_g + 1;
-tyg_absi_g = tyg_absi_g + 1;
+if tyg < 8.0824023 then tyg_g = 1;
+else if 8.0824023 <= tyg < 8.4998436 then tyg_g = 2;
+else if 8.4998436 <= tyg < 8.9585401 then tyg_g = 3;
+else if tyg >= 8.9585401 then tyg_g = 4;
+
+if tyg_bmi < 172.7061363 then tyg_bmi_g = 1;
+else if 172.7061363 <= tyg_bmi < 198.7922365 then tyg_bmi_g = 2;
+else if 198.7922365 <= tyg_bmi < 226.9852048 then tyg_bmi_g = 3;
+else if tyg_bmi >= 226.9852048 then tyg_bmi_g = 4;
+
+if tyg_absi < 0.6070892 then tyg_absi_g = 1;
+else if 0.6070892 <= tyg_absi < 0.6599588 then tyg_absi_g = 2;
+else if 0.6599588 <= tyg_absi < 0.7146401 then tyg_absi_g = 3;
+else if tyg_absi >= 0.7146401 then tyg_absi_g = 4;
 run;
 
 %let vv = 

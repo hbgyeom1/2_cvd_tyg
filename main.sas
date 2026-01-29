@@ -7,8 +7,9 @@ age_g sex town_t educ_g ho_incm bmi_g marri_g
 health_g stress_g drinking_g smoking_g drug_g diabetes_g
 hypertension_g dyslipidemia_g stroke_g mi_g angina_g;
 
-%let nn = age HE_wc HE_BMI HE_sbp HE_glu HE_TG HE_HDL_st2 HE_chol
-tyg tyg_bmi absi tyg_absi frs;
+%let nn = age HE_BMI HE_wc absi HE_sbp HE_glu HE_chol HE_HDL_st2
+HE_TG HE_ast HE_alt HE_HB HE_BUN HE_crea
+frs tyg tyg_bmi absi tyg_absi;
 
 %macro sub(y);
 %local i v; %let i=1; %let v=%scan(&ff, &i);
@@ -23,14 +24,26 @@ run;
 
 
 /*Table1.*/
-/*overall crude factor*/
+/*crude factor*/
 proc freq data=out; table &ff; run;
-proc freq data=out; table frs_g*(&ff); run;
-proc freq data=out; table tyg_g*(&ff); run;
-proc freq data=out; table tyg_bmi_g*(&ff); run;
-proc freq data=out; table tyg_absi_g*(&ff); run;
+proc freq data=out; table (&ff)*frs_g; run;
+proc freq data=out; table (&ff)*tyg_g; run;
+proc freq data=out; table (&ff)*tyg_bmi_g; run;
+proc freq data=out; table (&ff)*tyg_absi_g; run;
 
-/*overall weighted factor*/
+/*crude numeric*/
+proc means data=out; var &nn; run;
+proc means data=out; class frs_g; var &nn; run;
+proc means data=out; class tyg_g; var &nn; run;
+proc means data=out; class tyg_bmi_g; var &nn; run;
+proc means data=out; class tyg_absi_g; var &nn; run;
+
+proc glm data=out; class frs_g; model &nn = frs_g; run; quit;
+proc glm data=out; class tyg_g; model &nn = frs_g; run; quit;
+proc glm data=out; class tyg_bmi_g; model &nn = frs_g; run; quit;
+proc glm data=out; class tyg_absi_g; model &nn = frs_g; run; quit;
+
+/*weighted factor*/
 proc surveyfreq data=out;
 cluster psu; strata kstrata; weight wt_adj;
 table &ff / cl row; run;
@@ -47,14 +60,7 @@ proc surveyfreq data=out;
 cluster psu; strata kstrata; weight wt_adj;
 table tyg_absi_g*(&ff) / cl row; run;
 
-/*by crude factor*/
-proc means data=out; var &nn; run;
-proc means data=out; var frs_g*(&nn); run;
-proc means data=out; var tyg_g*(&nn); run;
-proc means data=out; var tyg_bmi_g*(&nn); run;
-proc means data=out; var tyg_absi_g*(&nn); run;
-
-/*by weighted factor*/
+/*weighted numeric*/
 proc surveymeans data=out;
 cluster psu; strata kstrata; weight wt_adj;
 var &nn; run;
