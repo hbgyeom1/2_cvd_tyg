@@ -4,10 +4,10 @@ data out; set ss.out; run;
 
 %let ff = 
 age_g sex town_t educ_g ho_incm bmi_g marri_g
-health_g stress_g drinking_g smoking_g drug_g diabetes_g
+health_g stress_g drinking_g smoking_g
 hypertension_g dyslipidemia_g stroke_g mi_g angina_g;
 
-%let nn = age HE_BMI HE_wc absi HE_sbp HE_glu HE_chol HE_HDL_st2
+%let nn = HE_BMI HE_wc absi HE_sbp HE_glu HE_chol HE_HDL_st2
 HE_TG HE_ast HE_alt HE_HB HE_BUN HE_crea
 frs tyg tyg_bmi absi tyg_absi;
 
@@ -21,7 +21,6 @@ run;
 %let i=%eval(&i+1); %let v=%scan(&ff, &i);
 %end;
 %mend;
-
 
 /*Table1.*/
 /*crude factor*/
@@ -37,11 +36,6 @@ proc means data=out; class frs_g; var &nn; run;
 proc means data=out; class tyg_g; var &nn; run;
 proc means data=out; class tyg_bmi_g; var &nn; run;
 proc means data=out; class tyg_absi_g; var &nn; run;
-
-proc glm data=out; class frs_g; model &nn = frs_g; run; quit;
-proc glm data=out; class tyg_g; model &nn = frs_g; run; quit;
-proc glm data=out; class tyg_bmi_g; model &nn = frs_g; run; quit;
-proc glm data=out; class tyg_absi_g; model &nn = frs_g; run; quit;
 
 /*weighted factor*/
 proc surveyfreq data=out;

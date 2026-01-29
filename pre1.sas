@@ -12,11 +12,18 @@ run;
 %mend;
 
 %let vv =
-year town_t psu sex age ho_incm educ marri_1 wt_itvex kstrata 
-D_1_1 BD1_11 BP1 BS1_1 BS3_1 DI1_2 DE1_dg HE_prg
-HE_sbp2 HE_sbp3 HE_sbp HE_AST HE_ALT HE_HB HE_BUN HE_CREA
-HE_ht HE_wt HE_wc HE_BMI HE_glu HE_chol HE_HDL_st2 HE_TG 
-DI1_dg DI2_dg DI3_dg DI5_dg DI6_dg;
+year psu kstrata wt_itvex
+/* demographic */
+age sex town_t educ ho_incm marri_1 D_1_1 BP1 BD1_11 BS1_1 BS3_1
+/* body */
+HE_sbp2 HE_sbp3 HE_sbp HE_ht HE_wt HE_wc HE_BMI
+/* lab */
+HE_glu HE_chol HE_HDL_st2 HE_TG
+HE_ast HE_alt HE_HB HE_BUN HE_crea HE_Uph
+/* diagnostic */
+DI1_dg DI2_dg DI3_dg DI5_dg DI6_dg
+/* additional */
+HE_prg;
 
 %mm(07, 21)
 
@@ -28,63 +35,58 @@ else if year in (2010 2011 2012) then year_g = 2;
 else if year in (2013 2014 2015) then year_g = 3;
 else if year in (2016 2017 2018) then year_g = 4;
 else if year in (2019 2020 2021) then year_g = 5;
-else if year = 2024 then year_g = 6;
+else if year = 2024 then year_g = 8;
 
-if 30 <= age <45 then age_g = 1;
-else if 45 <= age < 60 then age_g = 2;
-else if 60 <= age <= 74 then age_g = 3;
+if year = 2007 then wt_adj = wt_itvex * (100 / 2996);
+else if year in (2008 2009) then wt_adj = wt_itvex * (200 / 2996);
+else wt_adj = wt_itvex * (192 / 2996);
+
+if 19 <= age < 40 then age_g = 1;
+else if 40 <= age <65 then age_g = 2;
+else if age >= 65 then age_g = 3;
 
 if educ in (1 2 3) then educ_g = 1;
 else if educ = 4 then educ_g = 2;
 else if educ = 5 then educ_g = 3;
 else if educ in (6 7 8) then educ_g = 4;
 
-if marri_1 = 1 then marri_g = 1;
-else if marri_1 = 2 then marri_g = 2;
-
-if year = 2007 then wt_adj = wt_itvex * (100 / 3380);
-else if year in (2008 2009) then wt_adj = wt_itvex * (200 / 3380);
-else wt_adj = wt_itvex * (192 / 3380);
+if HE_BMI = . then HE_BMI = (HE_wt / (HE_ht * HE_ht)) * 10000;
+if HE_BMI < 18.5 then bmi_g = 1;
+else if 18.5 <= HE_BMI < 23 then bmi_g = 2;
+else if 23 <= HE_BMI < 25 then bmi_g = 3;
+else if HE_BMI >= 25 then bmi_g = 4;
 
 if D_1_1 in (1 2) then health_g = 1;
 else if D_1_1 = 3 then health_g = 2;
 else if D_1_1 in (4 5) then health_g = 3;
 
-if BD1_11 in (1 2) then drinking_g = 1;
-else if BD1_11 in (3 4) then drinking_g = 2;
-else if BD1_11 in (5 6) then drinking_g = 3;
-
 if BP1 in (1 2) then stress_g = 1;
 else if BP1 = 3 then stress_g = 2;
 else if BP1 = 4 then stress_g = 3;
 
+if BD1_11 in (1 2) then drinking_g = 1;
+else if BD1_11 in (3 4) then drinking_g = 2;
+else if BD1_11 in (5 6) then drinking_g = 3;
+
 if (BS1_1 in (1 2) & BS3_1 in (1 2 3)) or BS1_1 = 3
 then smoking_g = (BS1_1 = 2 & BS3_1 in (1 2));
+run;
 
-if DI1_2 in (5 8) then drug_g = 0;
-else if DI1_2 in (1 2 3 4) then drug_g = 1;
+data dd; set dd;
+if HE_sbp = . then HE_sbp = (HE_sbp2 + HE_sbp3) / 2;
 
-if DE1_dg in (0 8) then diabetes_g = 0;
-else if DE1_dg = 1 then diabetes_g = 1;
+tyg = log(HE_TG * HE_glu / 2);
+absi = (HE_wc / 100) / (HE_BMI**(2/3) * (HE_ht / 100)**(1/2));
+tyg_absi = tyg * absi;
+aip = log10(HE_TG / HE_HDL_st2);
+mets_ir = (log((2 * HE_glu) + HE_TG) * HE_BMI) / log(HE_HDL_st2);
 
 if sex = 1 then prg_g = 0;
 else if  HE_prg in (0 8) then prg_g = 0;
 else if HE_prg = 1 then prg_g = 1;
+run;
 
-if HE_sbp = . then HE_sbp = (HE_sbp2 + HE_sbp3) / 2;
-
-if HE_BMI = . then HE_BMI = (HE_wt / (HE_ht * HE_ht)) * 10000;
-
-if 0 < HE_BMI < 18.5 then bmi_g = 1;
-else if 18.5 <= HE_BMI < 23 then bmi_g = 2;
-else if 23 <= HE_BMI < 25 then bmi_g = 3;
-else if HE_BMI >= 25 then bmi_g = 4;
-
-tyg = log((HE_TG * HE_glu) / 2);
-tyg_bmi = tyg * HE_BMI;
-absi = (HE_wc / 100) / (HE_BMI**(2/3) * (HE_ht / 100)**(1/2));
-tyg_absi = tyg * absi;
-
+data dd; set dd;
 if DI1_dg in (0 8) then hypertension_g = 0;
 else if DI1_dg = 1 then hypertension_g = 1;
 
@@ -101,39 +103,21 @@ if DI6_dg in (0 8) then angina_g = 0;
 else if DI6_dg = 1 then angina_g = 1;
 run;
 
-proc means data=dd p25 p50 p75;
-var tyg tyg_bmi tyg_absi;
-run;
-
-data dd; set dd;
-if tyg < 8.0824023 then tyg_g = 1;
-else if 8.0824023 <= tyg < 8.4998436 then tyg_g = 2;
-else if 8.4998436 <= tyg < 8.9585401 then tyg_g = 3;
-else if tyg >= 8.9585401 then tyg_g = 4;
-
-if tyg_bmi < 172.7061363 then tyg_bmi_g = 1;
-else if 172.7061363 <= tyg_bmi < 198.7922365 then tyg_bmi_g = 2;
-else if 198.7922365 <= tyg_bmi < 226.9852048 then tyg_bmi_g = 3;
-else if tyg_bmi >= 226.9852048 then tyg_bmi_g = 4;
-
-if tyg_absi < 0.6070892 then tyg_absi_g = 1;
-else if 0.6070892 <= tyg_absi < 0.6599588 then tyg_absi_g = 2;
-else if 0.6599588 <= tyg_absi < 0.7146401 then tyg_absi_g = 3;
-else if tyg_absi >= 0.7146401 then tyg_absi_g = 4;
-run;
-
-%let vv = 
-year year_g psu wt_adj kstrata
-age age_g sex town_t educ_g ho_incm bmi_g marri_g health_g
-stress_g drinking_g smoking_g
-HE_AST HE_ALT HE_HB HE_BUN HE_CREA
-
-prg_g drug_g diabetes_g
-
-HE_wc HE_BMI HE_sbp HE_glu HE_TG HE_HDL_st2 HE_chol
-tyg tyg_bmi absi tyg_absi
-
-tyg_g tyg_bmi_g tyg_absi_g
-hypertension_g dyslipidemia_g stroke_g mi_g angina_g;
+%let vv =
+year year_g psu kstrata wt_adj
+/* demographic */
+age age_g sex town_t educ_g ho_incm bmi_g
+marri_1 health_g stress_g drinking_g smoking_g
+/* body */
+HE_sbp HE_wc HE_BMI
+/* lab */
+HE_glu HE_chol HE_HDL_st2 HE_TG
+HE_ast HE_alt HE_HB HE_BUN HE_crea HE_Uph
+/* diagnostic */
+DI1_dg DI2_dg DI3_dg DI5_dg DI6_dg
+/* index */
+tyg absi tyg_absi aip mets_ir
+/* additional */
+prg_g;
 
 data ss.dd; set dd (keep=&vv); run;
