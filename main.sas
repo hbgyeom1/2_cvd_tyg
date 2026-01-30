@@ -44,6 +44,25 @@ proc surveyfreq data=out;
 cluster psu; strata kstrata; weight wt_adj;
 table mets_ir_g*(&ff) / cl row; run;
 
+/*weighted numeric*/
+proc surveymeans data=out;
+cluster psu; strata kstrata; weight wt_adj;
+var &nn; run;
+proc surveymeans data=out;
+cluster psu; strata kstrata; weight wt_adj; domain tyg_g;
+var &nn; run;
+proc surveymeans data=out;
+cluster psu; strata kstrata; weight wt_adj; domain tyg_absi_g;
+var &nn; run;
+proc surveymeans data=out;
+cluster psu; strata kstrata; weight wt_adj; domain aip_g;
+var &nn; run;
+proc surveymeans data=out;
+cluster psu; strata kstrata; weight wt_adj; domain mets_ir_g;
+var &nn; run;
+
+
+
 %macro sub(y);
 %local i v; %let i=1; %let v=%scan(&ff, &i);
 %do %while(&v ne );
@@ -61,22 +80,7 @@ run;
 
 
 
-/*weighted numeric*/
-proc surveymeans data=out;
-cluster psu; strata kstrata; weight wt_adj;
-var &nn; run;
-proc surveymeans data=out;
-cluster psu; strata kstrata; weight wt_adj; domain frs_g;
-var &nn; run;
-proc surveymeans data=out;
-cluster psu; strata kstrata; weight wt_adj; domain tyg_g;
-var &nn; run;
-proc surveymeans data=out;
-cluster psu; strata kstrata; weight wt_adj; domain tyg_bmi_g;
-var &nn; run;
-proc surveymeans data=out;
-cluster psu; strata kstrata; weight wt_adj; domain tyg_absi_g;
-var &nn; run;
+
 
 
 /*Table2.*/
