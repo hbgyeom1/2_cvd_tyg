@@ -106,6 +106,20 @@ proc surveymeans data=out nomcar;
 cluster psu; strata kstrata; weight wt_adj; by subject; domain year_g;
 var mets_ir; run;
 
+%macro tot(y);
+%local i v; %let i=1; %let v=%scan(&ff, &i);
+%do %while(&v ne );
+proc surveymeans data=out nomcar;
+cluster psu; strata kstrata; weight wt_adj; by subject; domain &v;
+var &y; run;
+%let i=%eval(&i+1); %let v=%scan(&ff, &i);
+%end;
+%mend;
+
+%tot(tyg);
+%tot(tyg_absi);
+%tot(aip);
+%tot(mets_ir);
 
 %macro sub(y);
 %local i v; %let i=1; %let v=%scan(&ff, &i);
