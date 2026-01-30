@@ -2,6 +2,9 @@ libname ss "C:\Users\user\Documents\2_cvd_tyg\data\";
 
 data out; set ss.out; run;
 
+proc sort data=out; by subject; run;
+
+
 %let ff = 
 age_g sex town_t educ_g ho_incm bmi_g
 marri_g health_g stress_g drinking_g smoking_g
@@ -12,119 +15,126 @@ HE_glu HE_chol HE_HDL_st2 HE_TG
 HE_ast HE_alt HE_HB HE_BUN HE_crea HE_Uph
 tyg tyg_absi aip mets_ir;
 
-/*Table1.*/
-/*crude factor*/
-proc freq data=out; table &ff; run;
-proc freq data=out; table (&ff)*tyg_g; run;
-proc freq data=out; table (&ff)*tyg_absi_g; run;
-proc freq data=out; table (&ff)*aip_g; run;
-proc freq data=out; table (&ff)*mets_ir_g; run;
 
-/*crude numeric*/
-proc means data=out; var &nn; run;
-proc means data=out; class tyg_g; var &nn; run;
-proc means data=out; class tyg_absi_g; var &nn; run;
-proc means data=out; class aip_g; var &nn; run;
-proc means data=out; class mets_ir_g; var &nn; run;
+/* Table1. */
+/* crude factor */
+proc freq data=out; by subject; table &ff; run;
 
-/*weighted factor*/
-proc surveyfreq data=out;
-cluster psu; strata kstrata; weight wt_adj;
+proc freq data=out; by subject; table (&ff)*tyg_g; run;
+
+proc freq data=out; by subject; table (&ff)*tyg_absi_g; run;
+
+proc freq data=out; by subject; table (&ff)*aip_g; run;
+
+proc freq data=out; by subject; table (&ff)*mets_ir_g; run;
+
+
+/* crude numeric */
+proc means data=out; by subject; var &nn; run;
+
+proc sort data=out; by subject tyg_g; run;
+proc means data=out; by subject tyg_g; var &nn; run;
+
+proc sort data=out; by subject tyg_absi_g; run;
+proc means data=out; by subject tyg_absi_g; var &nn; run;
+
+proc sort data=out; by subject aip_g; run;
+proc means data=out; by subject aip_g; var &nn; run;
+
+proc sort data=out; by subject mets_ir_g; run;
+proc means data=out; by subject mets_ir_g; var &nn; run;
+
+
+/* weighted factor */
+proc surveyfreq data=out nomcar;
+cluster psu; strata kstrata; weight wt_adj; by subject;
 table &ff / cl row; run;
-proc surveyfreq data=out;
-cluster psu; strata kstrata; weight wt_adj;
+
+proc surveyfreq data=out nomcar;
+cluster psu; strata kstrata; weight wt_adj; by subject;
 table tyg_g*(&ff) / cl row; run;
-proc surveyfreq data=out;
-cluster psu; strata kstrata; weight wt_adj;
+
+proc surveyfreq data=out nomcar;
+cluster psu; strata kstrata; weight wt_adj; by subject;
 table tyg_absi_g*(&ff) / cl row; run;
-proc surveyfreq data=out;
-cluster psu; strata kstrata; weight wt_adj;
+
+proc surveyfreq data=out nomcar;
+cluster psu; strata kstrata; weight wt_adj; by subject;
 table aip_g*(&ff) / cl row; run;
-proc surveyfreq data=out;
-cluster psu; strata kstrata; weight wt_adj;
+
+proc surveyfreq data=out nomcar;
+cluster psu; strata kstrata; weight wt_adj; by subject;
 table mets_ir_g*(&ff) / cl row; run;
 
-/*weighted numeric*/
-proc surveymeans data=out;
-cluster psu; strata kstrata; weight wt_adj;
-var &nn; run;
-proc surveymeans data=out;
-cluster psu; strata kstrata; weight wt_adj; domain tyg_g;
-var &nn; run;
-proc surveymeans data=out;
-cluster psu; strata kstrata; weight wt_adj; domain tyg_absi_g;
-var &nn; run;
-proc surveymeans data=out;
-cluster psu; strata kstrata; weight wt_adj; domain aip_g;
-var &nn; run;
-proc surveymeans data=out;
-cluster psu; strata kstrata; weight wt_adj; domain mets_ir_g;
+
+/* weighted numeric */
+proc surveymeans data=out nomcar;
+cluster psu; strata kstrata; weight wt_adj; by subject;
 var &nn; run;
 
+proc surveymeans data=out nomcar;
+cluster psu; strata kstrata; weight wt_adj; by subject; domain tyg_g;
+var &nn; run;
+
+proc surveymeans data=out nomcar;
+cluster psu; strata kstrata; weight wt_adj; by subject; domain tyg_absi_g;
+var &nn; run;
+
+proc surveymeans data=out nomcar;
+cluster psu; strata kstrata; weight wt_adj; by subject; domain aip_g;
+var &nn; run;
+
+proc surveymeans data=out nomcar;
+cluster psu; strata kstrata; weight wt_adj; by subject; domain mets_ir_g;
+var &nn; run;
+
+
+/* Table2. */
+proc surveymeans data=out nomcar;
+cluster psu; strata kstrata; weight wt_adj; by subject; domain year_g;
+var tyg; run;
+
+proc surveymeans data=out nomcar;
+cluster psu; strata kstrata; weight wt_adj; by subject; domain year_g;
+var tyg_absi; run;
+
+proc surveymeans data=out nomcar;
+cluster psu; strata kstrata; weight wt_adj; by subject; domain year_g;
+var aip; run;
+
+proc surveymeans data=out nomcar;
+cluster psu; strata kstrata; weight wt_adj; by subject; domain year_g;
+var mets_ir; run;
 
 
 %macro sub(y);
 %local i v; %let i=1; %let v=%scan(&ff, &i);
 %do %while(&v ne );
-proc surveymeans data=out;
-cluster psu; strata kstrata; weight wt_adj; domain year_g*&v;
-var &y;
-run;
+proc surveymeans data=out nomcar;
+cluster psu; strata kstrata; weight wt_adj; by subject; domain year_g*&v;
+var &y; run;
 %let i=%eval(&i+1); %let v=%scan(&ff, &i);
 %end;
 %mend;
 
-
-
-
-
-
-
-
-
-
-/*Table2.*/
-proc means data=out; class year_g; var frs; run;
-proc means data=out; class year_g; var tyg; run;
-proc means data=out; class year_g; var tyg_bmi; run;
-proc means data=out; class year_g; var tyg_absi; run;
-
-proc surveymeans data=out;
-cluster psu; strata kstrata; weight wt_adj; domain year_g;
-var frs; run;
-proc surveymeans data=out;
-cluster psu; strata kstrata; weight wt_adj; domain year_g;
-var tyg; run;
-proc surveymeans data=out;
-cluster psu; strata kstrata; weight wt_adj; domain year_g;
-var tyg_bmi; run;
-proc surveymeans data=out;
-cluster psu; strata kstrata; weight wt_adj; domain year_g;
-var tyg_absi; run;
-
-proc means data=out; class year_g &ff; ways 2; var frs; run;
-proc means data=out; class year_g &ff; ways 2; var tyg; run;
-proc means data=out; class year_g &ff; ways 2; var tyg_bmi; run;
-proc means data=out; class year_g &ff; ways 2; var tyg_absi; run;
-
-%sub(frs);
 %sub(tyg);
-%sub(tyg_bmi);
 %sub(tyg_absi);
+%sub(aip);
+%sub(mets_ir);
 
 
-/*Table3.*/
-proc surveyreg data=out;
-cluster psu; strata kstrata; weight wt_adj; domain year_g;
-model frs = year; run;
-
+/* Table3. */
 proc surveyreg data=out;
 cluster psu; strata kstrata; weight wt_adj; domain year_g;
 model tyg = year; run;
 
 proc surveyreg data=out;
 cluster psu; strata kstrata; weight wt_adj; domain year_g;
-model tyg_bmi = year; run;
+model tyg_absi = year; run;
+
+proc surveyreg data=out;
+cluster psu; strata kstrata; weight wt_adj; domain year_g;
+model aip = year; run;
 
 proc surveyreg data=out;
 cluster psu; strata kstrata; weight wt_adj; domain year_g;
