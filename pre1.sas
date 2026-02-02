@@ -87,6 +87,7 @@ data dd; set dd;
 if HE_sbp = . then HE_sbp = (HE_sbp2 + HE_sbp3) / 2;
 
 tyg = log(HE_TG * HE_glu / 2);
+tyg_bmi = tyg * HE_BMI;
 absi = (HE_wc / 100) / (HE_BMI**(2/3) * (HE_ht / 100)**(1/2));
 tyg_absi = tyg * absi;
 aip = log10(HE_TG / HE_HDL_st2);
@@ -144,7 +145,7 @@ HE_ast HE_alt HE_HB HE_BUN HE_crea HE_Uph
 /* diagnostic */
 hypertension_g dyslipidemia_g stroke_g mi_g angina_g
 /* index */
-tyg absi tyg_absi aip mets_ir
+tyg tyg_bmi absi tyg_absi aip mets_ir
 /* additional */
 prg_g fst_g subject;
 
