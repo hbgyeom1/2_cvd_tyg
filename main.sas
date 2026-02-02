@@ -138,18 +138,27 @@ var &y; run;
 
 
 /* Table3. */
-proc surveyreg data=out;
-cluster psu; strata kstrata; weight wt_adj; domain year_g;
-model tyg = year; run;
+proc surveylogistic data=out;
+cluster psu; strata kstrata; weight wt_adj; by subject;
+class tyg_g(ref = '1') / param=ref;
+model hypertension_g(event = '1') = tyg_g; run;
 
-proc surveyreg data=out;
-cluster psu; strata kstrata; weight wt_adj; domain year_g;
-model tyg_absi = year; run;
+proc surveylogistic data=out;
+cluster psu; strata kstrata; weight wt_adj; by subject;
+class tyg_g(ref = '1') / param=ref;
+model dyslipidemia_g(event = '1') = tyg_g; run;
 
-proc surveyreg data=out;
-cluster psu; strata kstrata; weight wt_adj; domain year_g;
-model aip = year; run;
+proc surveylogistic data=out;
+cluster psu; strata kstrata; weight wt_adj; by subject;
+class tyg_g(ref = '1') / param=ref;
+model stroke_g(event = '1') = tyg_g; run;
 
-proc surveyreg data=out;
-cluster psu; strata kstrata; weight wt_adj; domain year_g;
-model tyg_absi = year; run;
+proc surveylogistic data=out;
+cluster psu; strata kstrata; weight wt_adj; by subject;
+class tyg_g(ref = '1') / param=ref;
+model mi_g(event = '1') = tyg_g; run;
+
+proc surveylogistic data=out;
+cluster psu; strata kstrata; weight wt_adj; by subject;
+class tyg_g(ref = '1') / param=ref;
+model angina_g(event = '1') = tyg_g; run;
