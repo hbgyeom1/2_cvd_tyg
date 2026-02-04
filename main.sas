@@ -315,26 +315,187 @@ marri_g health_g stress_g drinking_g smoking_g;
 %sublog(mets_ir_g, angina_g);
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+libname ss "C:\Users\user\Documents\2_cvd_tyg\data\";
+data out; set ss.out; run;
+
+%macro sublog2(index, dis);
+%local i v; %let i=1; %let v=%scan(&ff, &i);
+%do %while(%length(&v));
+proc sort data=out; by &v; run;
+proc surveylogistic data=out;
+where subject = 1; cluster psu; strata kstrata; weight wt_adj; by &v;
+class &index(ref = '1') / param=ref;
+model &dis(event = '1') = &index &cov; run;
+%let i=%eval(&i+1); %let v=%scan(&ff, &i);
+%end;
+%mend;
+
+
+%let ff = 
+age_g sex town_t educ_g ho_incm marri_g health_g stress_g drinking_g smoking_g;
+
+%let cov =
+age_g sex town_t educ_g ho_incm marri_g health_g stress_g drinking_g smoking_g
+HE_ast HE_alt HE_HB HE_BUN HE_crea HE_Uph;
+
+
 proc surveylogistic data=out;
 where subject = 1; cluster psu; strata kstrata; weight wt_adj;
 class tyg_g(ref = '1') / param=ref;
-model hypertension_g(event = '1') = tyg_g age_g sex town_t educ_g ho_incm marri_g
-health_g stress_g drinking_g smoking_g; run;
+model hypertension_g(event = '1') = tyg_g &cov; run;
 
 proc surveylogistic data=out;
 where subject = 1; cluster psu; strata kstrata; weight wt_adj;
 class tyg_absi_g(ref = '1') / param=ref;
-model hypertension_g(event = '1') = tyg_absi_g age_g sex town_t educ_g ho_incm marri_g
-health_g stress_g drinking_g smoking_g; run;
+model hypertension_g(event = '1') = tyg_absi_g &cov; run;
 
 proc surveylogistic data=out;
 where subject = 1; cluster psu; strata kstrata; weight wt_adj;
 class aip_g(ref = '1') / param=ref;
-model hypertension_g(event = '1') = aip_g age_g sex town_t educ_g ho_incm marri_g
-health_g stress_g drinking_g smoking_g; run;
+model hypertension_g(event = '1') = aip_g &cov; run;
 
 proc surveylogistic data=out;
 where subject = 1; cluster psu; strata kstrata; weight wt_adj;
 class mets_ir_g(ref = '1') / param=ref;
-model hypertension_g(event = '1') = mets_ir_g age_g sex town_t educ_g ho_incm marri_g
-health_g stress_g drinking_g smoking_g; run;
+model hypertension_g(event = '1') = mets_ir_g &cov; run;
+
+%sublog2(tyg_g, hypertension_g);
+%sublog2(tyg_absi_g, hypertension_g);
+%sublog2(aip_g, hypertension_g);
+%sublog2(mets_ir_g, hypertension_g);
+
+
+proc surveylogistic data=out;
+where subject = 1; cluster psu; strata kstrata; weight wt_adj;
+class tyg_g(ref = '1') / param=ref;
+model dyslipidemia_g(event = '1') = tyg_g &cov; run;
+
+proc surveylogistic data=out;
+where subject = 1; cluster psu; strata kstrata; weight wt_adj;
+class tyg_absi_g(ref = '1') / param=ref;
+model dyslipidemia_g(event = '1') = tyg_absi_g &cov; run;
+
+proc surveylogistic data=out;
+where subject = 1; cluster psu; strata kstrata; weight wt_adj;
+class aip_g(ref = '1') / param=ref;
+model dyslipidemia_g(event = '1') = aip_g &cov; run;
+
+proc surveylogistic data=out;
+where subject = 1; cluster psu; strata kstrata; weight wt_adj;
+class mets_ir_g(ref = '1') / param=ref;
+model dyslipidemia_g(event = '1') = mets_ir_g &cov; run;
+
+%sublog2(tyg_g, dyslipidemia_g);
+%sublog2(tyg_absi_g, dyslipidemia_g);
+%sublog2(aip_g, dyslipidemia_g);
+%sublog2(mets_ir_g, dyslipidemia_g);
+
+
+proc surveylogistic data=out;
+where subject = 1; cluster psu; strata kstrata; weight wt_adj;
+class tyg_g(ref = '1') / param=ref;
+model stroke_g(event = '1') = tyg_g &cov; run;
+
+proc surveylogistic data=out;
+where subject = 1; cluster psu; strata kstrata; weight wt_adj;
+class tyg_absi_g(ref = '1') / param=ref;
+model stroke_g(event = '1') = tyg_absi_g &cov; run;
+
+proc surveylogistic data=out;
+where subject = 1; cluster psu; strata kstrata; weight wt_adj;
+class aip_g(ref = '1') / param=ref;
+model stroke_g(event = '1') = aip_g &cov; run;
+
+proc surveylogistic data=out;
+where subject = 1; cluster psu; strata kstrata; weight wt_adj;
+class mets_ir_g(ref = '1') / param=ref;
+model stroke_g(event = '1') = mets_ir_g &cov; run;
+
+%sublog2(tyg_g, stroke_g);
+%sublog2(tyg_absi_g, stroke_g);
+%sublog2(aip_g, stroke_g);
+%sublog2(mets_ir_g, stroke_g);
+
+
+proc surveylogistic data=out;
+where subject = 1; cluster psu; strata kstrata; weight wt_adj;
+class tyg_g(ref = '1') / param=ref;
+model mi_g(event = '1') = tyg_g &cov; run;
+
+proc surveylogistic data=out;
+where subject = 1; cluster psu; strata kstrata; weight wt_adj;
+class tyg_absi_g(ref = '1') / param=ref;
+model mi_g(event = '1') = tyg_absi_g &cov; run;
+
+proc surveylogistic data=out;
+where subject = 1; cluster psu; strata kstrata; weight wt_adj;
+class aip_g(ref = '1') / param=ref;
+model mi_g(event = '1') = aip_g &cov; run;
+
+proc surveylogistic data=out;
+where subject = 1; cluster psu; strata kstrata; weight wt_adj;
+class mets_ir_g(ref = '1') / param=ref;
+model mi_g(event = '1') = mets_ir_g &cov; run;
+
+%sublog2(tyg_g, mi_g);
+%sublog2(tyg_absi_g, mi_g);
+%sublog2(aip_g, mi_g);
+%sublog2(mets_ir_g, mi_g);
+
+
+proc surveylogistic data=out;
+where subject = 1; cluster psu; strata kstrata; weight wt_adj;
+class tyg_g(ref = '1') / param=ref;
+model angina_g(event = '1') = tyg_g &cov; run;
+
+proc surveylogistic data=out;
+where subject = 1; cluster psu; strata kstrata; weight wt_adj;
+class tyg_absi_g(ref = '1') / param=ref;
+model angina_g(event = '1') = tyg_absi_g &cov; run;
+
+proc surveylogistic data=out;
+where subject = 1; cluster psu; strata kstrata; weight wt_adj;
+class aip_g(ref = '1') / param=ref;
+model angina_g(event = '1') = aip_g &cov; run;
+
+proc surveylogistic data=out;
+where subject = 1; cluster psu; strata kstrata; weight wt_adj;
+class mets_ir_g(ref = '1') / param=ref;
+model angina_g(event = '1') = mets_ir_g &cov; run;
+
+%sublog2(tyg_g, angina_g);
+%sublog2(tyg_absi_g, angina_g);
+%sublog2(aip_g, angina_g);
+%sublog2(mets_ir_g, angina_g);
