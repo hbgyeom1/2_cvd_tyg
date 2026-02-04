@@ -1,0 +1,19 @@
+> p1 <- roc_plot("hypertension_g")
+Basic model       + TyG  + TyG-ABSI       + AIP   + METS-IR 
+  0.8230974   0.8294283   0.8321148   0.8266486   0.8393852 
+
+> p2 <- roc_plot("dyslipidemia_g")
+Basic model       + TyG  + TyG-ABSI       + AIP   + METS-IR 
+  0.7527667   0.7683833   0.7712538   0.7586738   0.7662135
+
+> p3 <- roc_plot("stroke_g")
+Basic model       + TyG  + TyG-ABSI       + AIP   + METS-IR 
+  0.8341304   0.8350348   0.8362731   0.8348191   0.8368637 
+
+> p4 <- roc_plot("mi_g")
+Basic model       + TyG  + TyG-ABSI       + AIP   + METS-IR 
+  0.8522102   0.8521157   0.8532708   0.8521034   0.8556362 
+
+> p5 <- roc_plot("angina_g")
+Basic model       + TyG  + TyG-ABSI       + AIP   + METS-IR 
+  0.8291777   0.8295720   0.8318728   0.8296295   0.8333517 
