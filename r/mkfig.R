@@ -21,7 +21,8 @@ hist_plot <- function(x, t) {
       panel.border = element_rect(color = "black", fill = NA, linewidth = 0.6),
       panel.background = element_rect(fill = "white", color = NA),
       plot.background  = element_rect(fill = "white", color = NA),
-      text = element_text(size = 14, family = "Times New Roman")
+      text = element_text(size = 14, family = "Times New Roman"),
+      # aspect.ratio = 1
     )
 }
 
@@ -89,6 +90,7 @@ rcs_plot <- function(y, x, xlab) {
     scale_x_continuous(expand = c(0, 0)) +
     scale_y_continuous(expand = c(0, 0)) +
     labs(x = xlab, y = "Weighted Odds Ratio") +
+    coord_fixed() +
     theme(
       axis.line = element_blank(),
       panel.border = element_rect(fill = NA, linewidth = 0.6),
@@ -119,6 +121,7 @@ roc_plot1 <- function(y) {
     scale_x_continuous(expand = c(0, 0)) +
     scale_y_continuous(expand = c(0, 0)) +
     labs(x = "1 - specificity", y = "Sensitivity") +
+    coord_fixed() +
     theme(
       legend.title = element_blank(),
       legend.text = element_text(size = 12),
@@ -152,6 +155,7 @@ roc_plot2 <- function(y) {
     scale_x_continuous(expand = c(0, 0)) +
     scale_y_continuous(expand = c(0, 0)) +
     labs(x = "1 - specificity", y = "Sensitivity") +
+    coord_fixed() +
     theme(
       legend.title = element_blank(),
       legend.text = element_text(size = 12),
@@ -183,6 +187,7 @@ roc_plot3 <- function(y) {
     scale_x_continuous(expand = c(0, 0)) +
     scale_y_continuous(expand = c(0, 0)) +
     labs(x = "1 - specificity", y = "Sensitivity") +
+    coord_fixed() +
     theme(
       legend.title = element_blank(),
       legend.text = element_text(size = 12),
@@ -213,6 +218,7 @@ roc_plot4 <- function(y) {
     scale_x_continuous(expand = c(0, 0)) +
     scale_y_continuous(expand = c(0, 0)) +
     labs(x = "1 - specificity", y = "Sensitivity") +
+    coord_fixed() +
     theme(
       legend.title = element_blank(),
       legend.text = element_text(size = 12),
