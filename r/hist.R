@@ -1,7 +1,7 @@
-setwd("C:/Users/user/Documents/2_cvd_tyg")
+setwd("C:/Users/user/Documents/2_cvd_tyg/r")
 library(data.table);library(haven);library(magrittr)
 library(ggplot2);library(patchwork);library(officer);library(rvg)
-source("C:/Users/user/Documents/2_cvd_tyg/mkfig.R")
+source("C:/Users/user/Documents/2_cvd_tyg/r/mkfig.R")
 
 dd <- read_sas("C:/Users/user/Documents/2_cvd_tyg/data/dd.sas7bdat") %>% setDT()
 dd <- dd[complete.cases(dd)]
@@ -22,4 +22,4 @@ read_pptx() %>%
     dml(ggobj = f1),
     location = ph_location_fullsize()
   ) %>%
-  print(target = "figure/figure1.pptx")
+  print(target = "C:/Users/user/Documents/2_cvd_tyg/figure/figure1.pptx")

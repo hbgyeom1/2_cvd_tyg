@@ -25,6 +25,7 @@ hist_plot <- function(x, t) {
     )
 }
 
+
 rcs_plot <- function(y, x, xlab) {
   kn <- svyquantile(as.formula(paste0("~", x)), des, quantiles = c(0.05, 0.35, 0.65, 0.95)) %>% 
     coef() %>% unname()
@@ -89,6 +90,90 @@ rcs_plot <- function(y, x, xlab) {
     scale_y_continuous(expand = c(0, 0)) +
     labs(x = xlab, y = "Weighted Odds Ratio") +
     theme(
+      axis.line = element_blank(),
+      panel.border = element_rect(fill = NA, linewidth = 0.6),
+      panel.background = element_rect(fill = "white"),
+      plot.background  = element_rect(fill = "white"),
+      text = element_text(size = 14, family = "Times New Roman")
+    )
+}
+
+
+roc_plot <- function(y) {
+  rocs <- lapply((c(NA, "tyg_g", "tyg_absi_g", "aip_g", "mets_ir_g")), function(x) {
+    flm <- as.formula(paste0(
+      y, " ~ ", if (is.na(x)) "" else paste0(x, " + "),
+      " + age_g + sex + town_t + educ_g + ho_incm +
+      marri_g + health_g + stress_g + drinking_g + smoking_g +
+      HE_ast + HE_alt + HE_HB + HE_BUN + HE_crea + HE_Uph"))
+    fit <- svyglm(flm, design = des, family = quasibinomial())
+    pred <- predict(fit, type = "response")
+    roc(dat[[y]], pred, quiet = T)
+  }) %>% setNames(c("Basic model", "+ TyG", "+ TyG-ABSI", "+ AIP", "+ METS-IR"))
+  auc_vals <- sapply(rocs, auc)
+  print(auc_vals)
+  ggroc(rocs, legacy.axes = T) +
+    geom_abline(intercept = 0, slope = 1, linetype = "dashed") +
+    scale_x_continuous(expand = c(0, 0)) +
+    scale_y_continuous(expand = c(0, 0)) +
+    labs(x = "1 - specificity", y = "Sensitivity") +
+    theme(
+      legend.title = element_blank(),
+      legend.position = c(0.85, 0.20),
+      axis.line = element_blank(),
+      panel.border = element_rect(fill = NA, linewidth = 0.6),
+      panel.background = element_rect(fill = "white"),
+      plot.background  = element_rect(fill = "white"),
+      text = element_text(size = 14, family = "Times New Roman")
+    )
+}
+
+
+roc_plot2 <- function(y) {
+  rocs <- lapply((c("tyg_g", "tyg_absi_g", "aip_g", "mets_ir_g")), function(x) {
+    flm <- as.formula(paste0(
+      y, " ~ ", x))
+    fit <- svyglm(flm, design = des, family = quasibinomial())
+    pred <- predict(fit, type = "response")
+    roc(dat[[y]], pred, quiet = T)
+  }) %>% setNames(c("+ TyG", "+ TyG-ABSI", "+ AIP", "+ METS-IR"))
+  auc_vals <- sapply(rocs, auc)
+  print(auc_vals)
+  ggroc(rocs, legacy.axes = T) +
+    geom_abline(intercept = 0, slope = 1, linetype = "dashed") +
+    scale_x_continuous(expand = c(0, 0)) +
+    scale_y_continuous(expand = c(0, 0)) +
+    labs(x = "1 - specificity", y = "Sensitivity") +
+    theme(
+      legend.title = element_blank(),
+      legend.position = c(0.85, 0.20),
+      axis.line = element_blank(),
+      panel.border = element_rect(fill = NA, linewidth = 0.6),
+      panel.background = element_rect(fill = "white"),
+      plot.background  = element_rect(fill = "white"),
+      text = element_text(size = 14, family = "Times New Roman")
+    )
+}
+
+
+roc_plot3 <- function(y) {
+  rocs <- lapply((c("tyg", "tyg_absi", "aip", "mets_ir")), function(x) {
+    flm <- as.formula(paste0(
+      y, " ~ ", x))
+    fit <- svyglm(flm, design = des, family = quasibinomial())
+    pred <- predict(fit, type = "response")
+    roc(dat[[y]], pred, quiet = T)
+  }) %>% setNames(c("+ TyG", "+ TyG-ABSI", "+ AIP", "+ METS-IR"))
+  auc_vals <- sapply(rocs, auc)
+  print(auc_vals)
+  ggroc(rocs, legacy.axes = T) +
+    geom_abline(intercept = 0, slope = 1, linetype = "dashed") +
+    scale_x_continuous(expand = c(0, 0)) +
+    scale_y_continuous(expand = c(0, 0)) +
+    labs(x = "1 - specificity", y = "Sensitivity") +
+    theme(
+      legend.title = element_blank(),
+      legend.position = c(0.85, 0.20),
       axis.line = element_blank(),
       panel.border = element_rect(fill = NA, linewidth = 0.6),
       panel.background = element_rect(fill = "white"),

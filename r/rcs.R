@@ -1,8 +1,8 @@
-setwd("C:/Users/user/Documents/2_cvd_tyg")
+setwd("C:/Users/user/Documents/2_cvd_tyg/r")
 library(data.table);library(haven);library(magrittr)
 library(survey);library(splines);library(ggplot2)
 library(patchwork);library(officer);library(rvg)
-source("C:/Users/user/Documents/2_cvd_tyg/mkfig.R")
+source("C:/Users/user/Documents/2_cvd_tyg/r/mkfig.R")
 
 dd <- read_sas("C:/Users/user/Documents/2_cvd_tyg/data/dd.sas7bdat") %>% setDT()
 dd <- dd[complete.cases(dd)]
@@ -76,4 +76,4 @@ f6 <- p1 + p2 + p3 + p4 +
 #     )
 # }
 # 
-# print(ppt, target = "figure/figure2.pptx")
+# print(ppt, target = "C:/Users/user/Documents/2_cvd_tyg/figure/figure2.pptx")
