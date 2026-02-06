@@ -39,7 +39,7 @@ f55 <- p5 + p5 +
   theme(plot.margin = margin(10, 10, 10, 10, unit = "pt"))
 
 
-plots <- list(f55)
+plots <- list(f12, f34, f55)
 ppt <- read_pptx()
 for (p in plots) {
   ppt <- ppt %>%
@@ -55,4 +55,4 @@ for (p in plots) {
     )
 }
 
-print(ppt, target = "C:/Users/user/Documents/2_cvd_tyg/figure/figure3.pptx")
+print(ppt, target = "C:/Users/user/Documents/2_cvd_tyg/figure/test.pptx")

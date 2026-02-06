@@ -133,11 +133,11 @@ roc_plot1 <- function(y) {
   auc_vals <- sapply(rocs, auc)
   new_names <- sprintf("%s (AUC = %.3f)", names(rocs), as.numeric(auc_vals))
   rocs <- setNames(rocs, new_names)
-  ggroc(rocs, legacy.axes = T) +
+  ggroc(rocs, legacy.axes = T, linewidth = 0.1) +
     geom_abline(intercept = 0, slope = 1, linetype = "dashed") +
+    guides(color = guide_legend(override.aes = list(linewidth = 0.5))) +
     scale_x_continuous(expand = c(0, 0)) +
     scale_y_continuous(expand = c(0, 0)) +
-    # coord_fixed() +
     theme(
       legend.title = element_blank(),
       legend.text = element_text(size = 11),
