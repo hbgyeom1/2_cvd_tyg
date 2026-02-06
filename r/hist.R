@@ -13,7 +13,9 @@ p2 <- hist_plot("tyg_absi", "TyG-ABSI")
 p3 <- hist_plot("aip", "AIP")
 p4 <- hist_plot("mets_ir", "METS-IR")
 
-f1 <- p1 + p2 + p3 + p4 + plot_layout(axes = "collect", axis_titles = "collect")
+f1 <- p1 + p2 + p3 + p4 +
+  plot_layout(axis_titles = "collect") &
+  theme(plot.margin = margin(10, 10, 10, 10, unit = "pt"))
 
 read_pptx() %>%
   add_slide(layout = "Title and Content", master = "Office Theme") %>%

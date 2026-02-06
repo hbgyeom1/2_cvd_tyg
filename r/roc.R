@@ -11,82 +11,48 @@ dd <- dd[subject != 0]
 dat <- as.data.table(dd)
 des <- svydesign(ids = ~psu, strata = ~kstrata, weights = ~wt_adj, data = dat, nest = T)
 
-# baseline + quartile
-p1 <- roc_plot1("hypertension_g")
-p2 <- roc_plot1("dyslipidemia_g")
-p3 <- roc_plot1("stroke_g")
-p4 <- roc_plot1("mi_g")
-p5 <- roc_plot1("angina_g")
+p1 <- roc_plot1("hypertension_g") +
+  labs(y = "Sensitivity") + theme(axis.title.x = element_blank())
+p2 <- roc_plot1("dyslipidemia_g") +
+  labs(y = "Sensitivity") + theme(axis.title.x = element_blank())
+p3 <- roc_plot1("stroke_g") +
+  labs(y = "Sensitivity") + theme(axis.title.x = element_blank())
+p4 <- roc_plot1("mi_g") +
+  labs(y = "Sensitivity") + theme(axis.title.x = element_blank())
+p5 <- roc_plot1("angina_g") +
+  labs(y = "Sensitivity") + theme(axis.title.x = element_blank())
 
-plots <- list(p1, p2, p3, p4, p5)
+
+f12 <- p1 + p2 +
+  plot_annotation(tag_levels = 'A') +
+  plot_layout(axis_titles = "collect") &
+  theme(plot.margin = margin(10, 10, 10, 10, unit = "pt"))
+
+f34 <- p3 + p4 +
+  plot_annotation(tag_levels = 'A') +
+  plot_layout(axis_titles = "collect") &
+  theme(plot.margin = margin(10, 10, 10, 10, unit = "pt"))
+
+f55 <- p5 + p5 +
+  plot_annotation(tag_levels = 'A') +
+  plot_layout(axis_titles = "collect") &
+  theme(plot.margin = margin(10, 10, 10, 10, unit = "pt"))
+
+
+plots <- list(f55)
 ppt <- read_pptx()
 for (p in plots) {
   ppt <- ppt %>%
     add_slide(layout = "Title and Content", master = "Office Theme") %>%
     ph_with(
       dml(ggobj = p),
-      location = ph_location_fullsize()
+      location = ph_location(
+        width = 10,
+        height = 5,
+        left = 1,
+        top = 1
+      )
     )
 }
 
 print(ppt, target = "C:/Users/user/Documents/2_cvd_tyg/figure/figure3.pptx")
-
-# baseline + numeric
-p1 <- roc_plot2("hypertension_g")
-p2 <- roc_plot2("dyslipidemia_g")
-p3 <- roc_plot2("stroke_g")
-p4 <- roc_plot2("mi_g")
-p5 <- roc_plot2("angina_g")
-
-plots <- list(p1, p2, p3, p4, p5)
-ppt <- read_pptx()
-for (p in plots) {
-  ppt <- ppt %>%
-    add_slide(layout = "Title and Content", master = "Office Theme") %>%
-    ph_with(
-      dml(ggobj = p),
-      location = ph_location_fullsize()
-    )
-}
-
-print(ppt, target = "C:/Users/user/Documents/2_cvd_tyg/figure/figure4.pptx")
-
-# quartile
-p1 <- roc_plot3("hypertension_g")
-p2 <- roc_plot3("dyslipidemia_g")
-p3 <- roc_plot3("stroke_g")
-p4 <- roc_plot3("mi_g")
-p5 <- roc_plot3("angina_g")
-
-plots <- list(p1, p2, p3, p4, p5)
-ppt <- read_pptx()
-for (p in plots) {
-  ppt <- ppt %>%
-    add_slide(layout = "Title and Content", master = "Office Theme") %>%
-    ph_with(
-      dml(ggobj = p),
-      location = ph_location_fullsize()
-    )
-}
-
-print(ppt, target = "C:/Users/user/Documents/2_cvd_tyg/figure/figure5.pptx")
-
-# numeric
-p1 <- roc_plot4("hypertension_g")
-p2 <- roc_plot4("dyslipidemia_g")
-p3 <- roc_plot4("stroke_g")
-p4 <- roc_plot4("mi_g")
-p5 <- roc_plot4("angina_g")
-
-plots <- list(p1, p2, p3, p4, p5)
-ppt <- read_pptx()
-for (p in plots) {
-  ppt <- ppt %>%
-    add_slide(layout = "Title and Content", master = "Office Theme") %>%
-    ph_with(
-      dml(ggobj = p),
-      location = ph_location_fullsize()
-    )
-}
-
-print(ppt, target = "C:/Users/user/Documents/2_cvd_tyg/figure/figure6.pptx")

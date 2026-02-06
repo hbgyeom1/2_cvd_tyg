@@ -24,14 +24,14 @@ dat$smoking_g <- factor(dat$smoking_g)
 
 des <- svydesign(ids = ~psu, strata = ~kstrata, weights = ~wt_adj, data = dat, nest = T)
 
-
 p1 <- rcs_plot("hypertension_g", "tyg", "TyG")
 p2 <- rcs_plot("hypertension_g", "tyg_absi", "TyG-ABSI")
 p3 <- rcs_plot("hypertension_g", "aip", "AIP")
 p4 <- rcs_plot("hypertension_g", "mets_ir", "METS-IR")
 
 f2 <- p1 + p2 + p3 + p4 +
-  plot_layout(axes = "collect", axis_titles = "collect"); f2
+  plot_layout(axis_titles = "collect") &
+  theme(plot.margin = margin(10, 10, 10, 10, unit = "pt"))
 
 p1 <- rcs_plot("dyslipidemia_g", "tyg", "TyG")
 p2 <- rcs_plot("dyslipidemia_g", "tyg_absi", "TyG-ABSI")
@@ -39,7 +39,8 @@ p3 <- rcs_plot("dyslipidemia_g", "aip", "AIP")
 p4 <- rcs_plot("dyslipidemia_g", "mets_ir", "METS-IR")
 
 f3 <- p1 + p2 + p3 + p4 +
-  plot_layout(axes = "collect", axis_titles = "collect"); f3
+  plot_layout(axis_titles = "collect") &
+  theme(plot.margin = margin(10, 10, 10, 10, unit = "pt"))
 
 p1 <- rcs_plot("stroke_g", "tyg", "TyG")
 p2 <- rcs_plot("stroke_g", "tyg_absi", "TyG-ABSI")
@@ -47,7 +48,8 @@ p3 <- rcs_plot("stroke_g", "aip", "AIP")
 p4 <- rcs_plot("stroke_g", "mets_ir", "METS-IR")
 
 f4 <- p1 + p2 + p3 + p4 +
-  plot_layout(axes = "collect", axis_titles = "collect"); f4
+  plot_layout(axis_titles = "collect") &
+  theme(plot.margin = margin(10, 10, 10, 10, unit = "pt"))
 
 p1 <- rcs_plot("mi_g", "tyg", "TyG")
 p2 <- rcs_plot("mi_g", "tyg_absi", "TyG-ABSI")
@@ -55,7 +57,8 @@ p3 <- rcs_plot("mi_g", "aip", "AIP")
 p4 <- rcs_plot("mi_g", "mets_ir", "METS-IR")
 
 f5 <- p1 + p2 + p3 + p4 +
-  plot_layout(axes = "collect", axis_titles = "collect"); f5
+  plot_layout(axis_titles = "collect") &
+  theme(plot.margin = margin(10, 10, 10, 10, unit = "pt"))
 
 p1 <- rcs_plot("angina_g", "tyg", "TyG")
 p2 <- rcs_plot("angina_g", "tyg_absi", "TyG-ABSI")
@@ -63,17 +66,18 @@ p3 <- rcs_plot("angina_g", "aip", "AIP")
 p4 <- rcs_plot("angina_g", "mets_ir", "METS-IR")
 
 f6 <- p1 + p2 + p3 + p4 +
-  plot_layout(axes = "collect", axis_titles = "collect"); f6
+  plot_layout(axis_titles = "collect") &
+  theme(plot.margin = margin(10, 10, 10, 10, unit = "pt"))
 
-# plots <- list(f2, f3, f4, f5, f6)
-# ppt <- read_pptx()
-# for (p in plots) {
-#   ppt <- ppt %>%
-#     add_slide(layout = "Title and Content", master = "Office Theme") %>%
-#     ph_with(
-#       dml(ggobj = p),
-#       location = ph_location_fullsize()
-#     )
-# }
-# 
-# print(ppt, target = "C:/Users/user/Documents/2_cvd_tyg/figure/figure2.pptx")
+plots <- list(f2, f3, f4, f5, f6)
+ppt <- read_pptx()
+for (p in plots) {
+  ppt <- ppt %>%
+    add_slide(layout = "Title and Content", master = "Office Theme") %>%
+    ph_with(
+      dml(ggobj = p),
+      location = ph_location_fullsize()
+    )
+}
+
+print(ppt, target = "C:/Users/user/Documents/2_cvd_tyg/figure/figure2.pptx")
